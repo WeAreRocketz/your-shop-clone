@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TutorialRouteImport } from './routes/tutorial'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ReportAbuseRouteImport } from './routes/report-abuse'
 import { Route as LoginRouteImport } from './routes/login'
@@ -53,6 +54,11 @@ import { Route as AuthenticatedAdminAbuseReportsRouteImport } from './routes/_au
 import { Route as AuthenticatedDashboardSupportTicketIdRouteImport } from './routes/_authenticated/dashboard.support.$ticketId'
 import { Route as AuthenticatedAdminTicketsTicketIdRouteImport } from './routes/_authenticated/admin.tickets.$ticketId'
 
+const TutorialRoute = TutorialRouteImport.update({
+  id: '/tutorial',
+  path: '/tutorial',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -293,6 +299,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/report-abuse': typeof ReportAbuseRoute
   '/signup': typeof SignupRoute
+  '/tutorial': typeof TutorialRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -337,6 +344,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/report-abuse': typeof ReportAbuseRoute
   '/signup': typeof SignupRoute
+  '/tutorial': typeof TutorialRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/legal/ccpa': typeof LegalCcpaRoute
   '/legal/cookies': typeof LegalCookiesRoute
@@ -381,6 +389,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/report-abuse': typeof ReportAbuseRoute
   '/signup': typeof SignupRoute
+  '/tutorial': typeof TutorialRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
@@ -427,6 +436,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/report-abuse'
     | '/signup'
+    | '/tutorial'
     | '/admin'
     | '/dashboard'
     | '/onboarding'
@@ -471,6 +481,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/report-abuse'
     | '/signup'
+    | '/tutorial'
     | '/onboarding'
     | '/legal/ccpa'
     | '/legal/cookies'
@@ -514,6 +525,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/report-abuse'
     | '/signup'
+    | '/tutorial'
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/onboarding'
@@ -560,6 +572,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ReportAbuseRoute: typeof ReportAbuseRoute
   SignupRoute: typeof SignupRoute
+  TutorialRoute: typeof TutorialRoute
   LegalCcpaRoute: typeof LegalCcpaRoute
   LegalCookiesRoute: typeof LegalCookiesRoute
   LegalDpaRoute: typeof LegalDpaRoute
@@ -577,6 +590,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tutorial': {
+      id: '/tutorial'
+      path: '/tutorial'
+      fullPath: '/tutorial'
+      preLoaderRoute: typeof TutorialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -996,6 +1016,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ReportAbuseRoute: ReportAbuseRoute,
   SignupRoute: SignupRoute,
+  TutorialRoute: TutorialRoute,
   LegalCcpaRoute: LegalCcpaRoute,
   LegalCookiesRoute: LegalCookiesRoute,
   LegalDpaRoute: LegalDpaRoute,
