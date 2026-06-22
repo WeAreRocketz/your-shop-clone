@@ -3,9 +3,32 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
-  beforeLoad: async () => {
+  beforeLoad: async ({ location }) => {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/login" });
+
+    // Admins bypass the approval gate
+    const { data: adminRow } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", data.user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+
+    if (!adminRow) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("approval_status")
+        .eq("id", data.user.id)
+        .maybeSingle();
+      if (profile && profile.approval_status !== "approved") {
+        // avoid loop if already on /pending-approval (it's a top-level public route)
+        if (!location.pathname.startsWith("/pending-approval")) {
+          throw redirect({ to: "/pending-approval" });
+        }
+      }
+    }
+
     return { user: data.user };
   },
   component: () => <Outlet />,
