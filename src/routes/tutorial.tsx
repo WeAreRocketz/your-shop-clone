@@ -373,17 +373,27 @@ function TutorialPage() {
                     ))}
                   </ol>
 
-                  <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-white/[0.04] to-transparent p-4">
-                    <div className="mb-3 flex items-center gap-1.5">
+                  <a
+                    href={s.shot}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/shot block overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-white/[0.04] to-transparent p-2 shadow-2xl transition hover:border-primary/40"
+                  >
+                    <div className="mb-2 flex items-center gap-1.5 px-2 pt-1">
                       <span className="h-2.5 w-2.5 rounded-full bg-red-500/60" />
                       <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/60" />
                       <span className="h-2.5 w-2.5 rounded-full bg-green-500/60" />
                       <span className="ml-2 text-[10px] uppercase tracking-wider text-muted-foreground">
-                        preview
+                        print real • clica pra ampliar
                       </span>
                     </div>
-                    <div className="min-h-[180px]">{s.preview()}</div>
-                  </div>
+                    <img
+                      src={s.shot}
+                      alt={`Print da tela: ${s.title}`}
+                      loading="lazy"
+                      className="aspect-[16/10] w-full rounded-lg object-cover object-top transition group-hover/shot:scale-[1.01]"
+                    />
+                  </a>
                 </div>
               </section>
             );
