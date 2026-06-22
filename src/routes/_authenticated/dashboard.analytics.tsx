@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import {
   PieChart, Pie, Cell, Tooltip as RTooltip, ResponsiveContainer,
   LineChart, Line, XAxis, YAxis, CartesianGrid, Legend,
 } from "recharts";
 import { Download } from "@/components/icon";
+import { Sparkles, Loader2 } from "lucide-react";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -17,6 +19,8 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { supabase } from "@/integrations/supabase/client";
+import { generateAnalyticsInsights } from "@/lib/api/ai-insights.functions";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/dashboard/analytics")({
   head: () => ({ meta: [{ title: "Analytics — Shop2Shops" }] }),
