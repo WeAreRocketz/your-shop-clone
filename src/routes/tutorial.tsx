@@ -1,9 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactElement } from "react";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
-  Rocket,
   Store,
   Package,
   Shuffle,
@@ -11,10 +10,10 @@ import {
   BarChart3,
   Tag,
   Wand2,
-  CreditCard,
+  Receipt,
   Activity,
   Settings,
-  LifeBuoy,
+  Mail,
   Sparkles,
   Check,
   Target,
