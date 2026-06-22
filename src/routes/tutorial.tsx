@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type ReactElement } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
@@ -15,11 +15,23 @@ import {
   Settings,
   Mail,
   Sparkles,
-  Check,
   Target,
   Zap,
 } from "@/components/icon";
 import logoAsset from "@/assets/shop2shops-logo.png.asset.json";
+
+import shotOnboarding from "@/assets/tutorial/onboarding.png.asset.json";
+import shotStores from "@/assets/tutorial/stores.png.asset.json";
+import shotProducts from "@/assets/tutorial/products.png.asset.json";
+import shotDistribution from "@/assets/tutorial/distribution.png.asset.json";
+import shotCart from "@/assets/tutorial/cart.png.asset.json";
+import shotBulk from "@/assets/tutorial/bulk-edit.png.asset.json";
+import shotCamuflador from "@/assets/tutorial/camuflador.png.asset.json";
+import shotAnalytics from "@/assets/tutorial/analytics.png.asset.json";
+import shotTracking from "@/assets/tutorial/tracking.png.asset.json";
+import shotFinance from "@/assets/tutorial/finance.png.asset.json";
+import shotSettings from "@/assets/tutorial/settings.png.asset.json";
+import shotSupport from "@/assets/tutorial/support.png.asset.json";
 
 export const Route = createFileRoute("/tutorial")({
   head: () => ({
@@ -48,7 +60,7 @@ type Section = {
   title: string;
   tldr: string;
   steps: string[];
-  preview: () => ReactElement;
+  shot: string;
 };
 
 const sections: Section[] = [
@@ -64,7 +76,7 @@ const sections: Section[] = [
       "Confirma o email (chega na hora).",
       "Onboarding te guia pelo essencial em 2 min.",
     ],
-    preview: () => <PreviewOnboarding />,
+    shot: shotOnboarding.url,
   },
   {
     id: "lojas",
@@ -78,16 +90,7 @@ const sections: Section[] = [
       "Cola o domínio .myshopify.com.",
       "Autoriza o app — pronto, tá sincronizada.",
     ],
-    preview: () => (
-      <PreviewGrid
-        items={[
-          { label: "Loja Cavala", sub: "principal • sync ON", tone: "primary" },
-          { label: "Vitrine 01", sub: "BR • ativa", tone: "ok" },
-          { label: "Vitrine 02", sub: "BR • ativa", tone: "ok" },
-          { label: "Vitrine 03", sub: "EU • testando", tone: "warn" },
-        ]}
-      />
-    ),
+    shot: shotStores.url,
   },
   {
     id: "produtos",
@@ -101,7 +104,7 @@ const sections: Section[] = [
       "Marca os produtos da Cavala.",
       "Clica Clonar para → escolhe as vitrines.",
     ],
-    preview: () => <PreviewProducts />,
+    shot: shotProducts.url,
   },
   {
     id: "distribuicao",
@@ -115,7 +118,7 @@ const sections: Section[] = [
       "Arrasta os sliders por loja.",
       "Salva. Roda no piloto automático.",
     ],
-    preview: () => <PreviewDistribution />,
+    shot: shotDistribution.url,
   },
   {
     id: "carrinho",
@@ -129,7 +132,7 @@ const sections: Section[] = [
       "Arrasta os blocos (upsell, badge, timer).",
       "Preview em tempo real → Publicar.",
     ],
-    preview: () => <PreviewCart />,
+    shot: shotCart.url,
   },
   {
     id: "bulk",
@@ -143,7 +146,7 @@ const sections: Section[] = [
       "Filtra (coleção, tag, preço).",
       "Escolhe a regra → Aplicar.",
     ],
-    preview: () => <PreviewBulk />,
+    shot: shotBulk.url,
   },
   {
     id: "camuflador",
@@ -157,7 +160,7 @@ const sections: Section[] = [
       "Seleciona produtos sensíveis.",
       "Clica Camuflar → revisa → salva.",
     ],
-    preview: () => <PreviewCamuflador />,
+    shot: shotCamuflador.url,
   },
   {
     id: "analytics",
@@ -171,7 +174,7 @@ const sections: Section[] = [
       "Filtra período e loja.",
       "Compara, exporta, escala o que tá quente.",
     ],
-    preview: () => <PreviewAnalytics />,
+    shot: shotAnalytics.url,
   },
   {
     id: "tracking",
@@ -185,7 +188,7 @@ const sections: Section[] = [
       "Cola o token de cada plataforma.",
       "Testa o evento de compra → tudo verde.",
     ],
-    preview: () => <PreviewTracking />,
+    shot: shotTracking.url,
   },
   {
     id: "financeiro",
@@ -199,7 +202,7 @@ const sections: Section[] = [
       "Vê plano atual + invoices.",
       "Upgrade/downgrade em 1 clique.",
     ],
-    preview: () => <PreviewFinance />,
+    shot: shotFinance.url,
   },
   {
     id: "config",
@@ -213,7 +216,7 @@ const sections: Section[] = [
       "Convida por email.",
       "Define permissões e pronto.",
     ],
-    preview: () => <PreviewSettings />,
+    shot: shotSettings.url,
   },
   {
     id: "suporte",
@@ -227,7 +230,7 @@ const sections: Section[] = [
       "Abre ticket com print + descrição.",
       "Acompanha as respostas no painel.",
     ],
-    preview: () => <PreviewSupport />,
+    shot: shotSupport.url,
   },
 ];
 
@@ -370,17 +373,27 @@ function TutorialPage() {
                     ))}
                   </ol>
 
-                  <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-white/[0.04] to-transparent p-4">
-                    <div className="mb-3 flex items-center gap-1.5">
+                  <a
+                    href={s.shot}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/shot block overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-white/[0.04] to-transparent p-2 shadow-2xl transition hover:border-primary/40"
+                  >
+                    <div className="mb-2 flex items-center gap-1.5 px-2 pt-1">
                       <span className="h-2.5 w-2.5 rounded-full bg-red-500/60" />
                       <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/60" />
                       <span className="h-2.5 w-2.5 rounded-full bg-green-500/60" />
                       <span className="ml-2 text-[10px] uppercase tracking-wider text-muted-foreground">
-                        preview
+                        print real • clica pra ampliar
                       </span>
                     </div>
-                    <div className="min-h-[180px]">{s.preview()}</div>
-                  </div>
+                    <img
+                      src={s.shot}
+                      alt={`Print da tela: ${s.title}`}
+                      loading="lazy"
+                      className="aspect-[16/10] w-full rounded-lg object-cover object-top transition group-hover/shot:scale-[1.01]"
+                    />
+                  </a>
                 </div>
               </section>
             );
@@ -403,255 +416,6 @@ function TutorialPage() {
             </Button>
           </section>
         </main>
-      </div>
-    </div>
-  );
-}
-
-/* ---------- Preview mocks (estilizados, sem screenshot real) ---------- */
-
-function PreviewOnboarding() {
-  const steps = ["Conta", "Loja", "Pixel", "Bora!"];
-  return (
-    <div className="flex flex-col gap-3">
-      {steps.map((s, i) => (
-        <div
-          key={s}
-          className={`flex items-center gap-3 rounded-lg border px-3 py-2 text-sm ${
-            i < 3
-              ? "border-primary/30 bg-primary/5 text-foreground"
-              : "border-border/60 bg-white/[0.02] text-muted-foreground"
-          }`}
-        >
-          <span
-            className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${
-              i < 3 ? "bg-primary text-primary-foreground" : "bg-white/10 text-muted-foreground"
-            }`}
-          >
-            {i < 3 ? <Check className="h-3 w-3" /> : i + 1}
-          </span>
-          {s}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function PreviewGrid({
-  items,
-}: {
-  items: { label: string; sub: string; tone: "primary" | "ok" | "warn" }[];
-}) {
-  const tones = {
-    primary: "border-primary/30 bg-primary/10",
-    ok: "border-emerald-500/30 bg-emerald-500/5",
-    warn: "border-amber-500/30 bg-amber-500/5",
-  };
-  return (
-    <div className="grid grid-cols-2 gap-2">
-      {items.map((it) => (
-        <div key={it.label} className={`rounded-lg border p-3 text-xs ${tones[it.tone]}`}>
-          <div className="flex items-center gap-1.5 font-semibold text-foreground">
-            <Store className="h-3.5 w-3.5" />
-            {it.label}
-          </div>
-          <div className="mt-1 text-[11px] text-muted-foreground">{it.sub}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function PreviewProducts() {
-  return (
-    <div className="flex flex-col gap-2">
-      {["Camiseta Oversized", "Calça Cargo Drop", "Tênis Chunky 22"].map((p, i) => (
-        <div
-          key={p}
-          className="flex items-center gap-3 rounded-lg border border-border/60 bg-white/[0.02] p-2.5"
-        >
-          <span className="h-9 w-9 rounded-md bg-gradient-to-br from-primary/30 to-primary/5" />
-          <div className="flex-1 text-xs">
-            <div className="font-semibold text-foreground">{p}</div>
-            <div className="text-muted-foreground">3 variantes • R$ {99 + i * 30},00</div>
-          </div>
-          <span className="rounded-md bg-primary/15 px-2 py-1 text-[10px] font-bold uppercase text-primary">
-            Clonar
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function PreviewDistribution() {
-  const rows = [
-    { name: "Vitrine 01", pct: 50 },
-    { name: "Vitrine 02", pct: 30 },
-    { name: "Vitrine 03", pct: 20 },
-  ];
-  return (
-    <div className="flex flex-col gap-3">
-      {rows.map((r) => (
-        <div key={r.name}>
-          <div className="mb-1 flex justify-between text-xs">
-            <span className="font-semibold text-foreground">{r.name}</span>
-            <span className="text-muted-foreground">{r.pct}%</span>
-          </div>
-          <div className="h-2 overflow-hidden rounded-full bg-white/[0.06]">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-primary to-primary/60"
-              style={{ width: `${r.pct}%` }}
-            />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function PreviewCart() {
-  return (
-    <div className="flex flex-col gap-2 text-xs">
-      {[
-        { icon: ShoppingCart, label: "Item no carrinho" },
-        { icon: Zap, label: "Upsell — Leve 2 pague 1" },
-        { icon: Tag, label: "Cupom DROP15" },
-        { icon: Target, label: "Frete grátis acima R$ 199" },
-      ].map((row) => (
-        <div
-          key={row.label}
-          className="flex items-center gap-2.5 rounded-lg border border-border/60 bg-white/[0.02] p-2.5"
-        >
-          <row.icon className="h-3.5 w-3.5 text-primary" />
-          <span className="font-medium text-foreground">{row.label}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function PreviewBulk() {
-  return (
-    <div className="flex flex-col gap-2 text-xs">
-      <div className="rounded-lg border border-border/60 bg-white/[0.02] p-2.5">
-        <div className="text-muted-foreground">Filtro</div>
-        <div className="mt-1 font-semibold text-foreground">coleção = Verão & preço &lt; 100</div>
-      </div>
-      <div className="rounded-lg border border-primary/30 bg-primary/5 p-2.5">
-        <div className="text-muted-foreground">Regra</div>
-        <div className="mt-1 font-semibold text-foreground">aumentar preço em +15%</div>
-      </div>
-      <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5 text-center font-semibold text-emerald-300">
-        342 produtos afetados
-      </div>
-    </div>
-  );
-}
-
-function PreviewCamuflador() {
-  return (
-    <div className="flex flex-col gap-2 text-xs">
-      <div className="rounded-lg border border-border/60 bg-white/[0.02] p-2.5">
-        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Antes</div>
-        <div className="mt-0.5 line-through text-muted-foreground">Camiseta Original Premium</div>
-      </div>
-      <div className="rounded-lg border border-primary/30 bg-primary/5 p-2.5">
-        <div className="text-[10px] uppercase tracking-wider text-primary">Depois</div>
-        <div className="mt-0.5 font-semibold text-foreground">C4m1s3ta 0riginal Pr3mium ✨</div>
-      </div>
-    </div>
-  );
-}
-
-function PreviewAnalytics() {
-  const bars = [40, 70, 55, 90, 65, 100, 80];
-  return (
-    <div>
-      <div className="mb-2 flex items-end justify-between text-xs">
-        <div>
-          <div className="text-muted-foreground">Faturamento 7d</div>
-          <div className="text-lg font-bold text-foreground">R$ 142.380</div>
-        </div>
-        <span className="rounded-md bg-emerald-500/15 px-2 py-1 text-[10px] font-bold text-emerald-300">
-          +24%
-        </span>
-      </div>
-      <div className="flex h-20 items-end gap-1.5">
-        {bars.map((h, i) => (
-          <div
-            key={i}
-            className="flex-1 rounded-t bg-gradient-to-t from-primary/30 to-primary"
-            style={{ height: `${h}%` }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function PreviewTracking() {
-  return (
-    <div className="flex flex-col gap-2 text-xs">
-      {[
-        { name: "Meta Pixel", status: "OK" },
-        { name: "Google Ads", status: "OK" },
-        { name: "TikTok Pixel", status: "OK" },
-      ].map((r) => (
-        <div
-          key={r.name}
-          className="flex items-center justify-between rounded-lg border border-border/60 bg-white/[0.02] px-3 py-2"
-        >
-          <span className="font-medium text-foreground">{r.name}</span>
-          <span className="flex items-center gap-1.5 text-[11px] font-bold text-emerald-300">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-            {r.status}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function PreviewFinance() {
-  return (
-    <div className="flex flex-col gap-2 text-xs">
-      <div className="rounded-lg border border-primary/30 bg-primary/5 p-3">
-        <div className="text-[10px] uppercase tracking-wider text-primary">Plano atual</div>
-        <div className="mt-0.5 text-lg font-bold text-foreground">Pro</div>
-        <div className="text-muted-foreground">Próxima cobrança em 12 dias</div>
-      </div>
-      <div className="rounded-lg border border-border/60 bg-white/[0.02] p-3 text-muted-foreground">
-        Último pagamento: <span className="font-semibold text-foreground">R$ 297,00</span>
-      </div>
-    </div>
-  );
-}
-
-function PreviewSettings() {
-  return (
-    <div className="flex flex-col gap-2 text-xs">
-      {["Workspace", "Time & permissões", "Notificações", "Segurança"].map((s) => (
-        <div
-          key={s}
-          className="flex items-center justify-between rounded-lg border border-border/60 bg-white/[0.02] px-3 py-2"
-        >
-          <span className="font-medium text-foreground">{s}</span>
-          <ArrowRight className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function PreviewSupport() {
-  return (
-    <div className="flex flex-col gap-2 text-xs">
-      <div className="self-start max-w-[80%] rounded-2xl rounded-bl-sm bg-white/[0.05] px-3 py-2 text-foreground">
-        Oi! Meu pixel não tá batendo evento de compra 😬
-      </div>
-      <div className="self-end max-w-[80%] rounded-2xl rounded-br-sm bg-primary/15 px-3 py-2 text-foreground">
-        Suave. Manda print do erro que já vou olhar 👀
       </div>
     </div>
   );
