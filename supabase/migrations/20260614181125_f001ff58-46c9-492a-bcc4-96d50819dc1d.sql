@@ -1,0 +1,1 @@
+CREATE POLICY "members delete rotation events" ON public.store_rotation_events FOR DELETE TO authenticated USING (workspace_id IN (SELECT id FROM public.workspaces WHERE user_id = auth.uid()));

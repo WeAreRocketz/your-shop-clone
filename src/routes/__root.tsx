@@ -10,7 +10,10 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import iconAsset from "@/assets/shop2shops-icon.png.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Toaster } from "@/components/ui/sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
   return (
@@ -77,16 +80,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Shop2Shops — Distribua pedidos entre múltiplas lojas Shopify" },
+      { name: "description", content: "Aqueça contas Shopify novas com pedidos reais. Um carrinho proprietário, múltiplas lojas, distribuição inteligente." },
+      { property: "og:title", content: "Shop2Shops — Distribua pedidos entre múltiplas lojas Shopify" },
+      { property: "og:description", content: "Aqueça contas Shopify novas com pedidos reais. Um carrinho proprietário, múltiplas lojas, distribuição inteligente." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:image", content: iconAsset.url },
+      { name: "twitter:image", content: iconAsset.url },
+      { name: "twitter:title", content: "Shop2Shops — Distribua pedidos entre múltiplas lojas Shopify" },
+      { name: "twitter:description", content: "Aqueça contas Shopify novas com pedidos reais. Um carrinho proprietário, múltiplas lojas, distribuição inteligente." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d5fa99b5-7d87-4903-b211-642eb385b5fd/id-preview-c40b17c3--ed2c3dc4-5eef-43f7-ac85-ff7437e6fd71.lovable.app-1781459173415.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d5fa99b5-7d87-4903-b211-642eb385b5fd/id-preview-c40b17c3--ed2c3dc4-5eef-43f7-ac85-ff7437e6fd71.lovable.app-1781459173415.png" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" },
+      { rel: "icon", type: "image/png", href: iconAsset.url },
+      { rel: "apple-touch-icon", href: iconAsset.url },
       {
         rel: "stylesheet",
         href: appCss,
@@ -115,11 +127,22 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      router.invalidate();
+      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+    });
+    return () => subscription.unsubscribe();
+  }, [router, queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <Toaster />
     </QueryClientProvider>
   );
 }
