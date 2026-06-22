@@ -54,6 +54,9 @@ function AnalyticsPage() {
   const [page, setPage] = useState(0);
   const [storeFilter, setStoreFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [insights, setInsights] = useState<string>("");
+  const [loadingInsights, setLoadingInsights] = useState(false);
+  const genInsights = useServerFn(generateAnalyticsInsights);
 
   const since = useMemo(() => {
     const d = new Date();
@@ -190,6 +193,32 @@ function AnalyticsPage() {
     URL.revokeObjectURL(url);
   }
 
+  async function handleGenerateInsights() {
+    setLoadingInsights(true);
+    try {
+      const perStore = pieData.map((d) => ({ name: d.name, orders: d.value }));
+      const { insights: text } = await genInsights({
+        data: {
+          periodDays: Number(period),
+          kpis: {
+            total: kpis.total,
+            revenue: Number(kpis.revenue.toFixed(2)),
+            topStore: kpis.topStore,
+            conv: Number(kpis.conv.toFixed(2)),
+          },
+          perStore,
+          timeline: lineData as Array<Record<string, string | number>>,
+          funnel: funnel.map((f) => ({ label: f.label, value: f.value, pct: Number(f.pct.toFixed(2)) })),
+        },
+      });
+      setInsights(text);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Falha ao gerar insights");
+    } finally {
+      setLoadingInsights(false);
+    }
+  }
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
@@ -219,6 +248,31 @@ function AnalyticsPage() {
             <Kpi label="Loja destaque" value={kpis.topStore} />
             <Kpi label="Conversão do carrinho" value={`${kpis.conv.toFixed(1)}%`} />
           </div>
+
+          <Card className="p-4 border-primary/30 bg-gradient-to-br from-primary/5 to-transparent">
+            <div className="flex items-center justify-between mb-3 gap-2 flex-wrap">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                <h2 className="font-medium">Insights de IA</h2>
+                <Badge variant="secondary" className="text-xs">Gemini</Badge>
+              </div>
+              <Button size="sm" onClick={handleGenerateInsights} disabled={loadingInsights || rows.length === 0}>
+                {loadingInsights ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Sparkles className="h-4 w-4 mr-2" />}
+                {insights ? "Gerar novamente" : "Gerar insights"}
+              </Button>
+            </div>
+            {insights ? (
+              <div className="prose prose-sm dark:prose-invert max-w-none whitespace-pre-wrap text-sm leading-relaxed">
+                {insights}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                {rows.length === 0
+                  ? "Sem dados no período para analisar."
+                  : "Clique em \"Gerar insights\" para receber uma análise automática dos seus dados."}
+              </p>
+            )}
+          </Card>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <Card className="p-4">
