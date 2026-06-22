@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type ReactElement } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
@@ -15,11 +15,23 @@ import {
   Settings,
   Mail,
   Sparkles,
-  Check,
   Target,
   Zap,
 } from "@/components/icon";
 import logoAsset from "@/assets/shop2shops-logo.png.asset.json";
+
+import shotOnboarding from "@/assets/tutorial/onboarding.png.asset.json";
+import shotStores from "@/assets/tutorial/stores.png.asset.json";
+import shotProducts from "@/assets/tutorial/products.png.asset.json";
+import shotDistribution from "@/assets/tutorial/distribution.png.asset.json";
+import shotCart from "@/assets/tutorial/cart.png.asset.json";
+import shotBulk from "@/assets/tutorial/bulk-edit.png.asset.json";
+import shotCamuflador from "@/assets/tutorial/camuflador.png.asset.json";
+import shotAnalytics from "@/assets/tutorial/analytics.png.asset.json";
+import shotTracking from "@/assets/tutorial/tracking.png.asset.json";
+import shotFinance from "@/assets/tutorial/finance.png.asset.json";
+import shotSettings from "@/assets/tutorial/settings.png.asset.json";
+import shotSupport from "@/assets/tutorial/support.png.asset.json";
 
 export const Route = createFileRoute("/tutorial")({
   head: () => ({
@@ -48,7 +60,7 @@ type Section = {
   title: string;
   tldr: string;
   steps: string[];
-  preview: () => ReactElement;
+  shot: string;
 };
 
 const sections: Section[] = [
@@ -64,7 +76,7 @@ const sections: Section[] = [
       "Confirma o email (chega na hora).",
       "Onboarding te guia pelo essencial em 2 min.",
     ],
-    preview: () => <PreviewOnboarding />,
+    shot: shotOnboarding.url,
   },
   {
     id: "lojas",
@@ -78,16 +90,7 @@ const sections: Section[] = [
       "Cola o domínio .myshopify.com.",
       "Autoriza o app — pronto, tá sincronizada.",
     ],
-    preview: () => (
-      <PreviewGrid
-        items={[
-          { label: "Loja Cavala", sub: "principal • sync ON", tone: "primary" },
-          { label: "Vitrine 01", sub: "BR • ativa", tone: "ok" },
-          { label: "Vitrine 02", sub: "BR • ativa", tone: "ok" },
-          { label: "Vitrine 03", sub: "EU • testando", tone: "warn" },
-        ]}
-      />
-    ),
+    shot: shotStores.url,
   },
   {
     id: "produtos",
@@ -101,7 +104,7 @@ const sections: Section[] = [
       "Marca os produtos da Cavala.",
       "Clica Clonar para → escolhe as vitrines.",
     ],
-    preview: () => <PreviewProducts />,
+    shot: shotProducts.url,
   },
   {
     id: "distribuicao",
@@ -115,7 +118,7 @@ const sections: Section[] = [
       "Arrasta os sliders por loja.",
       "Salva. Roda no piloto automático.",
     ],
-    preview: () => <PreviewDistribution />,
+    shot: shotDistribution.url,
   },
   {
     id: "carrinho",
@@ -129,7 +132,7 @@ const sections: Section[] = [
       "Arrasta os blocos (upsell, badge, timer).",
       "Preview em tempo real → Publicar.",
     ],
-    preview: () => <PreviewCart />,
+    shot: shotCart.url,
   },
   {
     id: "bulk",
@@ -143,7 +146,7 @@ const sections: Section[] = [
       "Filtra (coleção, tag, preço).",
       "Escolhe a regra → Aplicar.",
     ],
-    preview: () => <PreviewBulk />,
+    shot: shotBulk.url,
   },
   {
     id: "camuflador",
@@ -157,7 +160,7 @@ const sections: Section[] = [
       "Seleciona produtos sensíveis.",
       "Clica Camuflar → revisa → salva.",
     ],
-    preview: () => <PreviewCamuflador />,
+    shot: shotCamuflador.url,
   },
   {
     id: "analytics",
@@ -171,7 +174,7 @@ const sections: Section[] = [
       "Filtra período e loja.",
       "Compara, exporta, escala o que tá quente.",
     ],
-    preview: () => <PreviewAnalytics />,
+    shot: shotAnalytics.url,
   },
   {
     id: "tracking",
@@ -185,7 +188,7 @@ const sections: Section[] = [
       "Cola o token de cada plataforma.",
       "Testa o evento de compra → tudo verde.",
     ],
-    preview: () => <PreviewTracking />,
+    shot: shotTracking.url,
   },
   {
     id: "financeiro",
@@ -199,7 +202,7 @@ const sections: Section[] = [
       "Vê plano atual + invoices.",
       "Upgrade/downgrade em 1 clique.",
     ],
-    preview: () => <PreviewFinance />,
+    shot: shotFinance.url,
   },
   {
     id: "config",
@@ -213,7 +216,7 @@ const sections: Section[] = [
       "Convida por email.",
       "Define permissões e pronto.",
     ],
-    preview: () => <PreviewSettings />,
+    shot: shotSettings.url,
   },
   {
     id: "suporte",
@@ -227,7 +230,7 @@ const sections: Section[] = [
       "Abre ticket com print + descrição.",
       "Acompanha as respostas no painel.",
     ],
-    preview: () => <PreviewSupport />,
+    shot: shotSupport.url,
   },
 ];
 
