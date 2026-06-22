@@ -43,19 +43,19 @@ export const Route = createFileRoute("/tutorial")({
 type Section = {
   id: string;
   label: string;
-  icon: typeof Rocket;
+  icon: typeof Zap;
   tag: string;
   title: string;
   tldr: string;
   steps: string[];
-  preview: () => JSX.Element;
+  preview: () => ReactElement;
 };
 
 const sections: Section[] = [
   {
     id: "comecar",
     label: "Começar",
-    icon: Rocket,
+    icon: Zap,
     tag: "30 segundos",
     title: "Cria a conta e bora",
     tldr: "Cadastro grátis por 14 dias. Sem cartão. Você loga e cai direto no onboarding.",
@@ -190,7 +190,7 @@ const sections: Section[] = [
   {
     id: "financeiro",
     label: "Financeiro",
-    icon: CreditCard,
+    icon: Receipt,
     tag: "Sem surpresa",
     title: "Acompanha plano e cobranças",
     tldr: "Vê seu plano, próxima cobrança e troca quando quiser.",
@@ -218,7 +218,7 @@ const sections: Section[] = [
   {
     id: "suporte",
     label: "Suporte",
-    icon: LifeBuoy,
+    icon: Mail,
     tag: "Resposta rápida",
     title: "Travou? Chama a gente",
     tldr: "Chat de ticket dentro do dashboard. Resposta sempre que possível em horário comercial.",
