@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TutorialRouteImport } from './routes/tutorial'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ReportAbuseRouteImport } from './routes/report-abuse'
+import { Route as PendingApprovalRouteImport } from './routes/pending-approval'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -67,6 +68,11 @@ const SignupRoute = SignupRouteImport.update({
 const ReportAbuseRoute = ReportAbuseRouteImport.update({
   id: '/report-abuse',
   path: '/report-abuse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PendingApprovalRoute = PendingApprovalRouteImport.update({
+  id: '/pending-approval',
+  path: '/pending-approval',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -297,6 +303,7 @@ const AuthenticatedAdminTicketsTicketIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/pending-approval': typeof PendingApprovalRoute
   '/report-abuse': typeof ReportAbuseRoute
   '/signup': typeof SignupRoute
   '/tutorial': typeof TutorialRoute
@@ -342,6 +349,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/pending-approval': typeof PendingApprovalRoute
   '/report-abuse': typeof ReportAbuseRoute
   '/signup': typeof SignupRoute
   '/tutorial': typeof TutorialRoute
@@ -387,6 +395,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/pending-approval': typeof PendingApprovalRoute
   '/report-abuse': typeof ReportAbuseRoute
   '/signup': typeof SignupRoute
   '/tutorial': typeof TutorialRoute
@@ -434,6 +443,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
+    | '/pending-approval'
     | '/report-abuse'
     | '/signup'
     | '/tutorial'
@@ -479,6 +489,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/pending-approval'
     | '/report-abuse'
     | '/signup'
     | '/tutorial'
@@ -523,6 +534,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/login'
+    | '/pending-approval'
     | '/report-abuse'
     | '/signup'
     | '/tutorial'
@@ -570,6 +582,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
+  PendingApprovalRoute: typeof PendingApprovalRoute
   ReportAbuseRoute: typeof ReportAbuseRoute
   SignupRoute: typeof SignupRoute
   TutorialRoute: typeof TutorialRoute
@@ -609,6 +622,13 @@ declare module '@tanstack/react-router' {
       path: '/report-abuse'
       fullPath: '/report-abuse'
       preLoaderRoute: typeof ReportAbuseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pending-approval': {
+      id: '/pending-approval'
+      path: '/pending-approval'
+      fullPath: '/pending-approval'
+      preLoaderRoute: typeof PendingApprovalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -1014,6 +1034,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
+  PendingApprovalRoute: PendingApprovalRoute,
   ReportAbuseRoute: ReportAbuseRoute,
   SignupRoute: SignupRoute,
   TutorialRoute: TutorialRoute,
