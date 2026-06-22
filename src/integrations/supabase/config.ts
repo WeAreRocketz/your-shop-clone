@@ -14,8 +14,9 @@
 // process.env.APP_SUPABASE_SERVICE_ROLE_KEY no servidor.
 // ============================================================================
 
-export const SUPABASE_URL = '__SET_YOUR_SUPABASE_URL__';
-export const SUPABASE_PUBLISHABLE_KEY = '__SET_YOUR_SUPABASE_PUBLISHABLE_KEY__';
+export const SUPABASE_URL = 'https://zayzrtcsgkricsxrbxwr.supabase.co';
+export const SUPABASE_PUBLISHABLE_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpheXpydGNzZ2tyaWNzeHJieHdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNDk2OTcsImV4cCI6MjA5NzcyNTY5N30.ZPmeSsYYXlWMEnuqOYuQMLULu3P_E5UQKWrBVgYmiSk';
 
 export function assertSupabaseConfig() {
   if (
