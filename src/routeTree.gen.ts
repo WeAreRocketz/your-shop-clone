@@ -51,8 +51,11 @@ import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminTicketsRouteImport } from './routes/_authenticated/admin.tickets'
 import { Route as AuthenticatedAdminPlansRouteImport } from './routes/_authenticated/admin.plans'
 import { Route as AuthenticatedAdminMetricsRouteImport } from './routes/_authenticated/admin.metrics'
+import { Route as AuthenticatedAdminFinancialRouteImport } from './routes/_authenticated/admin.financial'
+import { Route as AuthenticatedAdminApprovalsRouteImport } from './routes/_authenticated/admin.approvals'
 import { Route as AuthenticatedAdminAbuseReportsRouteImport } from './routes/_authenticated/admin.abuse-reports'
 import { Route as AuthenticatedDashboardSupportTicketIdRouteImport } from './routes/_authenticated/dashboard.support.$ticketId'
+import { Route as AuthenticatedAdminWorkspacesIdRouteImport } from './routes/_authenticated/admin.workspaces.$id'
 import { Route as AuthenticatedAdminTicketsTicketIdRouteImport } from './routes/_authenticated/admin.tickets.$ticketId'
 
 const TutorialRoute = TutorialRouteImport.update({
@@ -281,6 +284,18 @@ const AuthenticatedAdminMetricsRoute =
     path: '/metrics',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminFinancialRoute =
+  AuthenticatedAdminFinancialRouteImport.update({
+    id: '/financial',
+    path: '/financial',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminApprovalsRoute =
+  AuthenticatedAdminApprovalsRouteImport.update({
+    id: '/approvals',
+    path: '/approvals',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminAbuseReportsRoute =
   AuthenticatedAdminAbuseReportsRouteImport.update({
     id: '/abuse-reports',
@@ -292,6 +307,12 @@ const AuthenticatedDashboardSupportTicketIdRoute =
     id: '/$ticketId',
     path: '/$ticketId',
     getParentRoute: () => AuthenticatedDashboardSupportRoute,
+  } as any)
+const AuthenticatedAdminWorkspacesIdRoute =
+  AuthenticatedAdminWorkspacesIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => AuthenticatedAdminWorkspacesRoute,
   } as any)
 const AuthenticatedAdminTicketsTicketIdRoute =
   AuthenticatedAdminTicketsTicketIdRouteImport.update({
@@ -319,11 +340,13 @@ export interface FileRoutesByFullPath {
   '/legal/subprocessadores': typeof LegalSubprocessadoresRoute
   '/legal/termos': typeof LegalTermosRoute
   '/admin/abuse-reports': typeof AuthenticatedAdminAbuseReportsRoute
+  '/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
+  '/admin/financial': typeof AuthenticatedAdminFinancialRoute
   '/admin/metrics': typeof AuthenticatedAdminMetricsRoute
   '/admin/plans': typeof AuthenticatedAdminPlansRoute
   '/admin/tickets': typeof AuthenticatedAdminTicketsRouteWithChildren
   '/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/admin/workspaces': typeof AuthenticatedAdminWorkspacesRoute
+  '/admin/workspaces': typeof AuthenticatedAdminWorkspacesRouteWithChildren
   '/dashboard/analytics': typeof AuthenticatedDashboardAnalyticsRoute
   '/dashboard/bulk-edit': typeof AuthenticatedDashboardBulkEditRoute
   '/dashboard/camuflador': typeof AuthenticatedDashboardCamufladorRoute
@@ -344,6 +367,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/admin/tickets/$ticketId': typeof AuthenticatedAdminTicketsTicketIdRoute
+  '/admin/workspaces/$id': typeof AuthenticatedAdminWorkspacesIdRoute
   '/dashboard/support/$ticketId': typeof AuthenticatedDashboardSupportTicketIdRoute
 }
 export interface FileRoutesByTo {
@@ -363,11 +387,13 @@ export interface FileRoutesByTo {
   '/legal/subprocessadores': typeof LegalSubprocessadoresRoute
   '/legal/termos': typeof LegalTermosRoute
   '/admin/abuse-reports': typeof AuthenticatedAdminAbuseReportsRoute
+  '/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
+  '/admin/financial': typeof AuthenticatedAdminFinancialRoute
   '/admin/metrics': typeof AuthenticatedAdminMetricsRoute
   '/admin/plans': typeof AuthenticatedAdminPlansRoute
   '/admin/tickets': typeof AuthenticatedAdminTicketsRouteWithChildren
   '/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/admin/workspaces': typeof AuthenticatedAdminWorkspacesRoute
+  '/admin/workspaces': typeof AuthenticatedAdminWorkspacesRouteWithChildren
   '/dashboard/analytics': typeof AuthenticatedDashboardAnalyticsRoute
   '/dashboard/bulk-edit': typeof AuthenticatedDashboardBulkEditRoute
   '/dashboard/camuflador': typeof AuthenticatedDashboardCamufladorRoute
@@ -388,6 +414,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/admin/tickets/$ticketId': typeof AuthenticatedAdminTicketsTicketIdRoute
+  '/admin/workspaces/$id': typeof AuthenticatedAdminWorkspacesIdRoute
   '/dashboard/support/$ticketId': typeof AuthenticatedDashboardSupportTicketIdRoute
 }
 export interface FileRoutesById {
@@ -411,11 +438,13 @@ export interface FileRoutesById {
   '/legal/subprocessadores': typeof LegalSubprocessadoresRoute
   '/legal/termos': typeof LegalTermosRoute
   '/_authenticated/admin/abuse-reports': typeof AuthenticatedAdminAbuseReportsRoute
+  '/_authenticated/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
+  '/_authenticated/admin/financial': typeof AuthenticatedAdminFinancialRoute
   '/_authenticated/admin/metrics': typeof AuthenticatedAdminMetricsRoute
   '/_authenticated/admin/plans': typeof AuthenticatedAdminPlansRoute
   '/_authenticated/admin/tickets': typeof AuthenticatedAdminTicketsRouteWithChildren
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/_authenticated/admin/workspaces': typeof AuthenticatedAdminWorkspacesRoute
+  '/_authenticated/admin/workspaces': typeof AuthenticatedAdminWorkspacesRouteWithChildren
   '/_authenticated/dashboard/analytics': typeof AuthenticatedDashboardAnalyticsRoute
   '/_authenticated/dashboard/bulk-edit': typeof AuthenticatedDashboardBulkEditRoute
   '/_authenticated/dashboard/camuflador': typeof AuthenticatedDashboardCamufladorRoute
@@ -436,6 +465,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/admin/tickets/$ticketId': typeof AuthenticatedAdminTicketsTicketIdRoute
+  '/_authenticated/admin/workspaces/$id': typeof AuthenticatedAdminWorkspacesIdRoute
   '/_authenticated/dashboard/support/$ticketId': typeof AuthenticatedDashboardSupportTicketIdRoute
 }
 export interface FileRouteTypes {
@@ -459,6 +489,8 @@ export interface FileRouteTypes {
     | '/legal/subprocessadores'
     | '/legal/termos'
     | '/admin/abuse-reports'
+    | '/admin/approvals'
+    | '/admin/financial'
     | '/admin/metrics'
     | '/admin/plans'
     | '/admin/tickets'
@@ -484,6 +516,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/dashboard/'
     | '/admin/tickets/$ticketId'
+    | '/admin/workspaces/$id'
     | '/dashboard/support/$ticketId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -503,6 +536,8 @@ export interface FileRouteTypes {
     | '/legal/subprocessadores'
     | '/legal/termos'
     | '/admin/abuse-reports'
+    | '/admin/approvals'
+    | '/admin/financial'
     | '/admin/metrics'
     | '/admin/plans'
     | '/admin/tickets'
@@ -528,6 +563,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/admin/tickets/$ticketId'
+    | '/admin/workspaces/$id'
     | '/dashboard/support/$ticketId'
   id:
     | '__root__'
@@ -550,6 +586,8 @@ export interface FileRouteTypes {
     | '/legal/subprocessadores'
     | '/legal/termos'
     | '/_authenticated/admin/abuse-reports'
+    | '/_authenticated/admin/approvals'
+    | '/_authenticated/admin/financial'
     | '/_authenticated/admin/metrics'
     | '/_authenticated/admin/plans'
     | '/_authenticated/admin/tickets'
@@ -575,6 +613,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/admin/tickets/$ticketId'
+    | '/_authenticated/admin/workspaces/$id'
     | '/_authenticated/dashboard/support/$ticketId'
   fileRoutesById: FileRoutesById
 }
@@ -897,6 +936,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminMetricsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/financial': {
+      id: '/_authenticated/admin/financial'
+      path: '/financial'
+      fullPath: '/admin/financial'
+      preLoaderRoute: typeof AuthenticatedAdminFinancialRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/approvals': {
+      id: '/_authenticated/admin/approvals'
+      path: '/approvals'
+      fullPath: '/admin/approvals'
+      preLoaderRoute: typeof AuthenticatedAdminApprovalsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/abuse-reports': {
       id: '/_authenticated/admin/abuse-reports'
       path: '/abuse-reports'
@@ -910,6 +963,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/support/$ticketId'
       preLoaderRoute: typeof AuthenticatedDashboardSupportTicketIdRouteImport
       parentRoute: typeof AuthenticatedDashboardSupportRoute
+    }
+    '/_authenticated/admin/workspaces/$id': {
+      id: '/_authenticated/admin/workspaces/$id'
+      path: '/$id'
+      fullPath: '/admin/workspaces/$id'
+      preLoaderRoute: typeof AuthenticatedAdminWorkspacesIdRouteImport
+      parentRoute: typeof AuthenticatedAdminWorkspacesRoute
     }
     '/_authenticated/admin/tickets/$ticketId': {
       id: '/_authenticated/admin/tickets/$ticketId'
@@ -936,23 +996,42 @@ const AuthenticatedAdminTicketsRouteWithChildren =
     AuthenticatedAdminTicketsRouteChildren,
   )
 
+interface AuthenticatedAdminWorkspacesRouteChildren {
+  AuthenticatedAdminWorkspacesIdRoute: typeof AuthenticatedAdminWorkspacesIdRoute
+}
+
+const AuthenticatedAdminWorkspacesRouteChildren: AuthenticatedAdminWorkspacesRouteChildren =
+  {
+    AuthenticatedAdminWorkspacesIdRoute: AuthenticatedAdminWorkspacesIdRoute,
+  }
+
+const AuthenticatedAdminWorkspacesRouteWithChildren =
+  AuthenticatedAdminWorkspacesRoute._addFileChildren(
+    AuthenticatedAdminWorkspacesRouteChildren,
+  )
+
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAbuseReportsRoute: typeof AuthenticatedAdminAbuseReportsRoute
+  AuthenticatedAdminApprovalsRoute: typeof AuthenticatedAdminApprovalsRoute
+  AuthenticatedAdminFinancialRoute: typeof AuthenticatedAdminFinancialRoute
   AuthenticatedAdminMetricsRoute: typeof AuthenticatedAdminMetricsRoute
   AuthenticatedAdminPlansRoute: typeof AuthenticatedAdminPlansRoute
   AuthenticatedAdminTicketsRoute: typeof AuthenticatedAdminTicketsRouteWithChildren
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
-  AuthenticatedAdminWorkspacesRoute: typeof AuthenticatedAdminWorkspacesRoute
+  AuthenticatedAdminWorkspacesRoute: typeof AuthenticatedAdminWorkspacesRouteWithChildren
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAbuseReportsRoute: AuthenticatedAdminAbuseReportsRoute,
+  AuthenticatedAdminApprovalsRoute: AuthenticatedAdminApprovalsRoute,
+  AuthenticatedAdminFinancialRoute: AuthenticatedAdminFinancialRoute,
   AuthenticatedAdminMetricsRoute: AuthenticatedAdminMetricsRoute,
   AuthenticatedAdminPlansRoute: AuthenticatedAdminPlansRoute,
   AuthenticatedAdminTicketsRoute: AuthenticatedAdminTicketsRouteWithChildren,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
-  AuthenticatedAdminWorkspacesRoute: AuthenticatedAdminWorkspacesRoute,
+  AuthenticatedAdminWorkspacesRoute:
+    AuthenticatedAdminWorkspacesRouteWithChildren,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
