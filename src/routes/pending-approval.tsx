@@ -23,13 +23,13 @@ function PendingApprovalPage() {
         return;
       }
       setEmail(u.user.email ?? "");
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from("profiles")
         .select("approval_status, rejection_reason")
         .eq("id", u.user.id)
         .maybeSingle();
       if (data) {
-        setStatus(data.approval_status as any);
+        setStatus(data.approval_status);
         setReason(data.rejection_reason);
         if (data.approval_status === "approved") navigate({ to: "/dashboard" });
       }

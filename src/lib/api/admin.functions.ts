@@ -31,7 +31,7 @@ export const setApprovalStatus = createServerFn({ method: "POST" })
       update.approved_at = new Date().toISOString();
       update.approved_by = context.userId;
     }
-    const { error } = await context.supabase
+    const { error } = await (context.supabase as any)
       .from("profiles")
       .update(update)
       .eq("id", data.userId);
@@ -52,7 +52,7 @@ export const setWorkspacePlan = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
-    const { error } = await context.supabase.rpc("admin_set_workspace_plan", {
+    const { error } = await (context.supabase as any).rpc("admin_set_workspace_plan", {
       _workspace_id: data.workspaceId,
       _plan_id: data.planId,
       _notes: data.notes ?? null,
@@ -68,7 +68,7 @@ export const extendTrial = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
-    const { error } = await context.supabase.rpc("admin_extend_trial", {
+    const { error } = await (context.supabase as any).rpc("admin_extend_trial", {
       _workspace_id: data.workspaceId,
       _days: data.days,
     });

@@ -16,13 +16,12 @@ export const Route = createFileRoute("/_authenticated")({
       .maybeSingle();
 
     if (!adminRow) {
-      const { data: profile } = await supabase
+      const { data: profile } = await (supabase as any)
         .from("profiles")
         .select("approval_status")
         .eq("id", data.user.id)
         .maybeSingle();
       if (profile && profile.approval_status !== "approved") {
-        // avoid loop if already on /pending-approval (it's a top-level public route)
         if (!location.pathname.startsWith("/pending-approval")) {
           throw redirect({ to: "/pending-approval" });
         }
