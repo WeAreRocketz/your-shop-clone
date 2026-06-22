@@ -1,69 +1,104 @@
+## Objetivo
 
-## Boa notícia: stack idêntico
+Expandir o painel admin existente (`/admin`) para que **digitalrocketoficial@gmail.com** tenha controle total: planos, papéis, financeiro, edição de plano de cada usuário, e **aprovar/rejeitar cadastros** antes do acesso à plataforma.
 
-O repositório `WeAreRocketz/shop-to-shops` **já usa o mesmo stack deste projeto Lovable**: TanStack Start + React 19 + Tailwind v4 + Supabase JS + Radix UI. Não precisa portar nada — é cópia direta de arquivos. Sem ativar Lovable Cloud.
+---
 
-## O que será copiado
+## 1. Banco de dados (migration)
 
-- `src/` inteiro (routes, components, hooks, contexts, lib, integrations, router, start, styles) — preservando a estrutura
-- `supabase/migrations/` (29 migrations) — para aplicar no seu projeto Supabase
-- `supabase/config.toml`
-- `components.json`, `eslint.config.js`, `bunfig.toml`, `tsconfig.json` se diferirem
-- Dependências do `package.json` (instaladas via `bun add`)
+**Aprovação de cadastro**
+- Adicionar `profiles.approval_status` (`pending` | `approved` | `rejected`, default `pending`)
+- `profiles.approved_at`, `profiles.approved_by`, `profiles.rejection_reason`
+- Backfill: todos os profiles existentes + o admin = `approved`
+- Trigger `handle_new_user` cria profile com status `pending`
 
-Arquivos preservados: `package.json` raiz desta plataforma será atualizado, não substituído (mantém scripts/lockfile compatíveis).
+**Edição de plano por usuário**
+- Adicionar `workspaces.plan_override_id` (admin força um plano específico ignorando billing)
+- Adicionar `workspaces.plan_notes` (texto livre admin)
+- Helper SQL `admin_set_workspace_plan(workspace_id, plan_id, notes)`
 
-## Estrutura do app (visão geral)
+**Financeiro admin**
+- View `admin_financial_overview`: MRR, total receita por plano, contagem por status, trial expirando, inadimplência
+- View `admin_workspace_billing`: por workspace — plano atual, próximo vencimento, último pagamento, status
 
-- **Público**: `/`, `/login`, `/signup`, `/report-abuse`, páginas legais (`/legal/*`)
-- **Autenticado** (`_authenticated/`): dashboard completo (products, stores, cart, finance, mappings, analytics, settings, support, tracking, distribution, camuflador, bulk-edit, onboarding) e área admin (users, workspaces, plans, tickets, abuse-reports, metrics)
-- **APIs públicas** (`/api/public/*`): `s2s-cart.js`, `s2s-checkout`, `s2s-settings`, `s2s-track`, `shopify-order-webhook`
+**Garantir admin Digital Rocket**
+- Inserir role `admin` para o user_id de `digitalrocketoficial@gmail.com` (idempotente via `ON CONFLICT`)
 
-Sem Supabase Edge Functions — toda lógica server roda em `createServerFn` / server routes do TanStack (compatível direto).
+**RLS / Grants**
+- Todas as novas colunas/views: `GRANT SELECT TO authenticated`
+- Policies novas: somente `has_role(auth.uid(), 'admin')` pode UPDATE em approval_status / plan_override_id
 
-## Conectar ao seu Supabase
+---
 
-O cliente já lê de variáveis de ambiente. Vou cadastrar como secrets (sem hardcode):
+## 2. Gate de aprovação no login
 
-- `VITE_SUPABASE_URL` + `SUPABASE_URL` (mesma URL, duas chaves para client e server)
-- `VITE_SUPABASE_PUBLISHABLE_KEY` + `SUPABASE_PUBLISHABLE_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY` (para operações admin)
+- Criar rota pública `/pending-approval` mostrando "Seu cadastro está aguardando aprovação"
+- No `_authenticated/route.tsx`: após validar sessão, checar `profiles.approval_status`. Se `pending` → redirect `/pending-approval`. Se `rejected` → redirect `/pending-approval?status=rejected` com mensagem
+- Admin sempre passa (bypass do gate)
 
-Secrets adicionais detectadas no código (opcionais, conforme você for usar):
-- `STRIPE_SECRET_KEY` — se for usar checkout Stripe
-- `LOVABLE_API_KEY` — se houver uso de Lovable AI (posso remover se preferir)
-- `DATABASE_URL` — só se algum server fn fizer SQL direto
+---
 
-## Migrations no seu Supabase novo
+## 3. Novas páginas admin
 
-29 arquivos SQL precisam rodar **na ordem cronológica** no seu projeto. Duas opções:
+**`/admin/approvals`** — fila de cadastros pendentes
+- Tabela: email, nome, data cadastro, workspace
+- Ações: **Aprovar** / **Rejeitar** (com motivo opcional)
+- Filtro por status (pending/approved/rejected)
 
-1. **Você roda via Supabase CLI** (`supabase db push` apontando seu projeto) — recomendado, mais limpo
-2. **Você cola em ordem no SQL Editor** do dashboard Supabase — funciona, mais manual
+**`/admin/financial`** — visão financeira global
+- Cards: MRR, receita total, # assinantes ativos, # em trial, # inadimplentes
+- Tabela por plano: assinantes, receita
+- Tabela: trials expirando nos próximos 7 dias
 
-Não posso executar SQL no seu Supabase a partir daqui (não temos credenciais de DB), só posso entregar os arquivos no projeto.
+**`/admin/workspaces/$id`** — detalhe + edição de workspace
+- Ler workspace, owner, plano atual, uso
+- Form: trocar plano (dropdown de planos), notas admin, estender trial, salvar
+- Atalho a partir da lista existente `/admin/workspaces`
 
-## Passos de execução
+**Atualizar `/admin/users`**
+- Adicionar coluna "Status" (approval_status) + botões inline aprovar/rejeitar
+- Já existe toggle de role admin — manter
 
-1. Copiar `src/` (substituindo o scaffold atual) e `supabase/` (migrations + config)
-2. Copiar `components.json`, `bunfig.toml` se diferirem
-3. Mesclar dependências no `package.json` e rodar `bun install`
-4. Pedir suas credenciais via formulário seguro (`add_secret`) — você cola URL + publishable + service role
-5. Verificar build e preview; ajustar qualquer import quebrado se aparecer
-6. Te entregar instruções de como rodar as migrations no seu Supabase
+---
 
-## Riscos e ressalvas
+## 4. Server functions (`src/lib/api/admin.functions.ts`)
 
-- **Database vazio até você rodar as migrations** → telas autenticadas vão dar erro de "tabela não existe" antes desse passo
-- **Storage buckets, Auth providers (Google/etc) e Edge Function secrets** que existam no Supabase original precisam ser recriados manualmente no seu projeto (não vêm nas migrations)
-- **Webhook do Shopify** (`/api/public/shopify-order-webhook`) precisará da URL atualizada no painel da Shopify quando publicar
-- **Realtime/publications**: se o app original usava, você precisa habilitar nas tabelas correspondentes no seu Supabase
-- Possíveis ajustes pós-cópia se algum arquivo gerado (`routeTree.gen.ts`, `types.ts`) precisar regenerar
+Todas com `requireSupabaseAuth` + check `has_role(userId, 'admin')`:
+- `approveUser({ userId })` / `rejectUser({ userId, reason })`
+- `setWorkspacePlan({ workspaceId, planId, notes })`
+- `extendTrial({ workspaceId, days })`
+- `getFinancialOverview()` → lê as views
+- `getPendingApprovals()` / `getAllUsersWithStatus()`
 
-## Confirmação necessária
+---
 
-Antes de eu começar, confirme:
+## 5. Sidebar admin
+Adicionar links: **Aprovações** (com badge de pendentes), **Financeiro**. Reorganizar ordem.
 
-- Pode sobrescrever o conteúdo atual deste projeto Lovable? (vai apagar o scaffold em branco)
-- Quer que eu mantenha `LOVABLE_API_KEY` (caso o app use IA) ou removo todas as features de IA?
-- Você prefere rodar as migrations via Supabase CLI ou via SQL Editor do dashboard?
+---
+
+## Detalhes técnicos
+
+```text
+src/routes/_authenticated/
+  admin.approvals.tsx       (novo)
+  admin.financial.tsx       (novo)
+  admin.workspaces.$id.tsx  (novo — detalhe)
+  admin.users.tsx           (atualizar)
+  route.tsx                 (gate de approval)
+src/routes/pending-approval.tsx  (novo — público)
+src/lib/api/admin.functions.ts   (novo)
+src/components/admin-sidebar.tsx (atualizar)
+supabase/migrations/<ts>_admin_full_control.sql
+```
+
+A migration cria toda a infra de uma vez (colunas, views, helper, role admin do Digital Rocket, RLS, grants). Após aplicada, todas as páginas novas funcionam imediatamente.
+
+---
+
+## Fora do escopo (confirmar se quer incluir)
+- Integração de cobrança real (Stripe/Paddle) — o painel financeiro lê dados do que já existe; não cria checkout
+- Notificação por email ao aprovar/rejeitar — posso adicionar via Resend se quiser
+- Histórico/audit log de ações admin — posso adicionar tabela `admin_audit_log` se quiser
+
+Confirma que sigo com este plano? Se quiser email de notificação no aprovar/rejeitar e audit log, me diga antes de eu começar.

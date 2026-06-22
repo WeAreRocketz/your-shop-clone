@@ -11,8 +11,10 @@ export const Route = createFileRoute("/_authenticated/admin")({
 
 const TITLES: Array<{ match: (p: string) => boolean; label: string }> = [
   { match: (p) => p === "/admin", label: "Visão geral" },
+  { match: (p) => p.startsWith("/admin/approvals"), label: "Aprovações de cadastro" },
   { match: (p) => p.startsWith("/admin/users"), label: "Usuários" },
   { match: (p) => p.startsWith("/admin/workspaces"), label: "Workspaces" },
+  { match: (p) => p.startsWith("/admin/financial"), label: "Financeiro" },
   { match: (p) => p.startsWith("/admin/plans"), label: "Planos" },
   { match: (p) => p.startsWith("/admin/metrics"), label: "Métricas & Custos" },
   { match: (p) => p.startsWith("/admin/tickets"), label: "Tickets" },
