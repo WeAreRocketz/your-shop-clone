@@ -9,38 +9,602 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ReportAbuseRouteImport } from './routes/report-abuse'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LegalTermosRouteImport } from './routes/legal.termos'
+import { Route as LegalSubprocessadoresRouteImport } from './routes/legal.subprocessadores'
+import { Route as LegalReembolsoRouteImport } from './routes/legal.reembolso'
+import { Route as LegalPrivacidadeRouteImport } from './routes/legal.privacidade'
+import { Route as LegalDpoRouteImport } from './routes/legal.dpo'
+import { Route as LegalDpaRouteImport } from './routes/legal.dpa'
+import { Route as LegalCookiesRouteImport } from './routes/legal.cookies'
+import { Route as LegalCcpaRouteImport } from './routes/legal.ccpa'
+import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as ApiPublicShopifyOrderWebhookRouteImport } from './routes/api/public/shopify-order-webhook'
+import { Route as ApiPublicS2sTrackRouteImport } from './routes/api/public/s2s-track'
+import { Route as ApiPublicS2sSettingsRouteImport } from './routes/api/public/s2s-settings'
+import { Route as ApiPublicS2sCheckoutRouteImport } from './routes/api/public/s2s-checkout'
+import { Route as ApiPublicS2sCartDotjsRouteImport } from './routes/api/public/s2s-cart[.]js'
+import { Route as AuthenticatedDashboardTrackingRouteImport } from './routes/_authenticated/dashboard.tracking'
+import { Route as AuthenticatedDashboardSupportRouteImport } from './routes/_authenticated/dashboard.support'
+import { Route as AuthenticatedDashboardStoresRouteImport } from './routes/_authenticated/dashboard.stores'
+import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
+import { Route as AuthenticatedDashboardProductsRouteImport } from './routes/_authenticated/dashboard.products'
+import { Route as AuthenticatedDashboardMappingsRouteImport } from './routes/_authenticated/dashboard.mappings'
+import { Route as AuthenticatedDashboardFinanceRouteImport } from './routes/_authenticated/dashboard.finance'
+import { Route as AuthenticatedDashboardDistributionRouteImport } from './routes/_authenticated/dashboard.distribution'
+import { Route as AuthenticatedDashboardCartRouteImport } from './routes/_authenticated/dashboard.cart'
+import { Route as AuthenticatedDashboardCamufladorRouteImport } from './routes/_authenticated/dashboard.camuflador'
+import { Route as AuthenticatedDashboardBulkEditRouteImport } from './routes/_authenticated/dashboard.bulk-edit'
+import { Route as AuthenticatedDashboardAnalyticsRouteImport } from './routes/_authenticated/dashboard.analytics'
+import { Route as AuthenticatedAdminWorkspacesRouteImport } from './routes/_authenticated/admin.workspaces'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminTicketsRouteImport } from './routes/_authenticated/admin.tickets'
+import { Route as AuthenticatedAdminPlansRouteImport } from './routes/_authenticated/admin.plans'
+import { Route as AuthenticatedAdminMetricsRouteImport } from './routes/_authenticated/admin.metrics'
+import { Route as AuthenticatedAdminAbuseReportsRouteImport } from './routes/_authenticated/admin.abuse-reports'
+import { Route as AuthenticatedDashboardSupportTicketIdRouteImport } from './routes/_authenticated/dashboard.support.$ticketId'
+import { Route as AuthenticatedAdminTicketsTicketIdRouteImport } from './routes/_authenticated/admin.tickets.$ticketId'
 
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportAbuseRoute = ReportAbuseRouteImport.update({
+  id: '/report-abuse',
+  path: '/report-abuse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalTermosRoute = LegalTermosRouteImport.update({
+  id: '/legal/termos',
+  path: '/legal/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalSubprocessadoresRoute = LegalSubprocessadoresRouteImport.update({
+  id: '/legal/subprocessadores',
+  path: '/legal/subprocessadores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalReembolsoRoute = LegalReembolsoRouteImport.update({
+  id: '/legal/reembolso',
+  path: '/legal/reembolso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalPrivacidadeRoute = LegalPrivacidadeRouteImport.update({
+  id: '/legal/privacidade',
+  path: '/legal/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalDpoRoute = LegalDpoRouteImport.update({
+  id: '/legal/dpo',
+  path: '/legal/dpo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalDpaRoute = LegalDpaRouteImport.update({
+  id: '/legal/dpa',
+  path: '/legal/dpa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalCookiesRoute = LegalCookiesRouteImport.update({
+  id: '/legal/cookies',
+  path: '/legal/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalCcpaRoute = LegalCcpaRouteImport.update({
+  id: '/legal/ccpa',
+  path: '/legal/ccpa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const ApiPublicShopifyOrderWebhookRoute =
+  ApiPublicShopifyOrderWebhookRouteImport.update({
+    id: '/api/public/shopify-order-webhook',
+    path: '/api/public/shopify-order-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicS2sTrackRoute = ApiPublicS2sTrackRouteImport.update({
+  id: '/api/public/s2s-track',
+  path: '/api/public/s2s-track',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicS2sSettingsRoute = ApiPublicS2sSettingsRouteImport.update({
+  id: '/api/public/s2s-settings',
+  path: '/api/public/s2s-settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicS2sCheckoutRoute = ApiPublicS2sCheckoutRouteImport.update({
+  id: '/api/public/s2s-checkout',
+  path: '/api/public/s2s-checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicS2sCartDotjsRoute = ApiPublicS2sCartDotjsRouteImport.update({
+  id: '/api/public/s2s-cart.js',
+  path: '/api/public/s2s-cart.js',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardTrackingRoute =
+  AuthenticatedDashboardTrackingRouteImport.update({
+    id: '/tracking',
+    path: '/tracking',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardSupportRoute =
+  AuthenticatedDashboardSupportRouteImport.update({
+    id: '/support',
+    path: '/support',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardStoresRoute =
+  AuthenticatedDashboardStoresRouteImport.update({
+    id: '/stores',
+    path: '/stores',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardSettingsRoute =
+  AuthenticatedDashboardSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardProductsRoute =
+  AuthenticatedDashboardProductsRouteImport.update({
+    id: '/products',
+    path: '/products',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardMappingsRoute =
+  AuthenticatedDashboardMappingsRouteImport.update({
+    id: '/mappings',
+    path: '/mappings',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardFinanceRoute =
+  AuthenticatedDashboardFinanceRouteImport.update({
+    id: '/finance',
+    path: '/finance',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardDistributionRoute =
+  AuthenticatedDashboardDistributionRouteImport.update({
+    id: '/distribution',
+    path: '/distribution',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardCartRoute =
+  AuthenticatedDashboardCartRouteImport.update({
+    id: '/cart',
+    path: '/cart',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardCamufladorRoute =
+  AuthenticatedDashboardCamufladorRouteImport.update({
+    id: '/camuflador',
+    path: '/camuflador',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardBulkEditRoute =
+  AuthenticatedDashboardBulkEditRouteImport.update({
+    id: '/bulk-edit',
+    path: '/bulk-edit',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardAnalyticsRoute =
+  AuthenticatedDashboardAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedAdminWorkspacesRoute =
+  AuthenticatedAdminWorkspacesRouteImport.update({
+    id: '/workspaces',
+    path: '/workspaces',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminTicketsRoute =
+  AuthenticatedAdminTicketsRouteImport.update({
+    id: '/tickets',
+    path: '/tickets',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminPlansRoute = AuthenticatedAdminPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminMetricsRoute =
+  AuthenticatedAdminMetricsRouteImport.update({
+    id: '/metrics',
+    path: '/metrics',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminAbuseReportsRoute =
+  AuthenticatedAdminAbuseReportsRouteImport.update({
+    id: '/abuse-reports',
+    path: '/abuse-reports',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedDashboardSupportTicketIdRoute =
+  AuthenticatedDashboardSupportTicketIdRouteImport.update({
+    id: '/$ticketId',
+    path: '/$ticketId',
+    getParentRoute: () => AuthenticatedDashboardSupportRoute,
+  } as any)
+const AuthenticatedAdminTicketsTicketIdRoute =
+  AuthenticatedAdminTicketsTicketIdRouteImport.update({
+    id: '/$ticketId',
+    path: '/$ticketId',
+    getParentRoute: () => AuthenticatedAdminTicketsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/report-abuse': typeof ReportAbuseRoute
+  '/signup': typeof SignupRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/legal/ccpa': typeof LegalCcpaRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/dpa': typeof LegalDpaRoute
+  '/legal/dpo': typeof LegalDpoRoute
+  '/legal/privacidade': typeof LegalPrivacidadeRoute
+  '/legal/reembolso': typeof LegalReembolsoRoute
+  '/legal/subprocessadores': typeof LegalSubprocessadoresRoute
+  '/legal/termos': typeof LegalTermosRoute
+  '/admin/abuse-reports': typeof AuthenticatedAdminAbuseReportsRoute
+  '/admin/metrics': typeof AuthenticatedAdminMetricsRoute
+  '/admin/plans': typeof AuthenticatedAdminPlansRoute
+  '/admin/tickets': typeof AuthenticatedAdminTicketsRouteWithChildren
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/workspaces': typeof AuthenticatedAdminWorkspacesRoute
+  '/dashboard/analytics': typeof AuthenticatedDashboardAnalyticsRoute
+  '/dashboard/bulk-edit': typeof AuthenticatedDashboardBulkEditRoute
+  '/dashboard/camuflador': typeof AuthenticatedDashboardCamufladorRoute
+  '/dashboard/cart': typeof AuthenticatedDashboardCartRoute
+  '/dashboard/distribution': typeof AuthenticatedDashboardDistributionRoute
+  '/dashboard/finance': typeof AuthenticatedDashboardFinanceRoute
+  '/dashboard/mappings': typeof AuthenticatedDashboardMappingsRoute
+  '/dashboard/products': typeof AuthenticatedDashboardProductsRoute
+  '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
+  '/dashboard/stores': typeof AuthenticatedDashboardStoresRoute
+  '/dashboard/support': typeof AuthenticatedDashboardSupportRouteWithChildren
+  '/dashboard/tracking': typeof AuthenticatedDashboardTrackingRoute
+  '/api/public/s2s-cart.js': typeof ApiPublicS2sCartDotjsRoute
+  '/api/public/s2s-checkout': typeof ApiPublicS2sCheckoutRoute
+  '/api/public/s2s-settings': typeof ApiPublicS2sSettingsRoute
+  '/api/public/s2s-track': typeof ApiPublicS2sTrackRoute
+  '/api/public/shopify-order-webhook': typeof ApiPublicShopifyOrderWebhookRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/admin/tickets/$ticketId': typeof AuthenticatedAdminTicketsTicketIdRoute
+  '/dashboard/support/$ticketId': typeof AuthenticatedDashboardSupportTicketIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/report-abuse': typeof ReportAbuseRoute
+  '/signup': typeof SignupRoute
+  '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/legal/ccpa': typeof LegalCcpaRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/dpa': typeof LegalDpaRoute
+  '/legal/dpo': typeof LegalDpoRoute
+  '/legal/privacidade': typeof LegalPrivacidadeRoute
+  '/legal/reembolso': typeof LegalReembolsoRoute
+  '/legal/subprocessadores': typeof LegalSubprocessadoresRoute
+  '/legal/termos': typeof LegalTermosRoute
+  '/admin/abuse-reports': typeof AuthenticatedAdminAbuseReportsRoute
+  '/admin/metrics': typeof AuthenticatedAdminMetricsRoute
+  '/admin/plans': typeof AuthenticatedAdminPlansRoute
+  '/admin/tickets': typeof AuthenticatedAdminTicketsRouteWithChildren
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/workspaces': typeof AuthenticatedAdminWorkspacesRoute
+  '/dashboard/analytics': typeof AuthenticatedDashboardAnalyticsRoute
+  '/dashboard/bulk-edit': typeof AuthenticatedDashboardBulkEditRoute
+  '/dashboard/camuflador': typeof AuthenticatedDashboardCamufladorRoute
+  '/dashboard/cart': typeof AuthenticatedDashboardCartRoute
+  '/dashboard/distribution': typeof AuthenticatedDashboardDistributionRoute
+  '/dashboard/finance': typeof AuthenticatedDashboardFinanceRoute
+  '/dashboard/mappings': typeof AuthenticatedDashboardMappingsRoute
+  '/dashboard/products': typeof AuthenticatedDashboardProductsRoute
+  '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
+  '/dashboard/stores': typeof AuthenticatedDashboardStoresRoute
+  '/dashboard/support': typeof AuthenticatedDashboardSupportRouteWithChildren
+  '/dashboard/tracking': typeof AuthenticatedDashboardTrackingRoute
+  '/api/public/s2s-cart.js': typeof ApiPublicS2sCartDotjsRoute
+  '/api/public/s2s-checkout': typeof ApiPublicS2sCheckoutRoute
+  '/api/public/s2s-settings': typeof ApiPublicS2sSettingsRoute
+  '/api/public/s2s-track': typeof ApiPublicS2sTrackRoute
+  '/api/public/shopify-order-webhook': typeof ApiPublicShopifyOrderWebhookRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/admin/tickets/$ticketId': typeof AuthenticatedAdminTicketsTicketIdRoute
+  '/dashboard/support/$ticketId': typeof AuthenticatedDashboardSupportTicketIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/login': typeof LoginRoute
+  '/report-abuse': typeof ReportAbuseRoute
+  '/signup': typeof SignupRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/legal/ccpa': typeof LegalCcpaRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/dpa': typeof LegalDpaRoute
+  '/legal/dpo': typeof LegalDpoRoute
+  '/legal/privacidade': typeof LegalPrivacidadeRoute
+  '/legal/reembolso': typeof LegalReembolsoRoute
+  '/legal/subprocessadores': typeof LegalSubprocessadoresRoute
+  '/legal/termos': typeof LegalTermosRoute
+  '/_authenticated/admin/abuse-reports': typeof AuthenticatedAdminAbuseReportsRoute
+  '/_authenticated/admin/metrics': typeof AuthenticatedAdminMetricsRoute
+  '/_authenticated/admin/plans': typeof AuthenticatedAdminPlansRoute
+  '/_authenticated/admin/tickets': typeof AuthenticatedAdminTicketsRouteWithChildren
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/admin/workspaces': typeof AuthenticatedAdminWorkspacesRoute
+  '/_authenticated/dashboard/analytics': typeof AuthenticatedDashboardAnalyticsRoute
+  '/_authenticated/dashboard/bulk-edit': typeof AuthenticatedDashboardBulkEditRoute
+  '/_authenticated/dashboard/camuflador': typeof AuthenticatedDashboardCamufladorRoute
+  '/_authenticated/dashboard/cart': typeof AuthenticatedDashboardCartRoute
+  '/_authenticated/dashboard/distribution': typeof AuthenticatedDashboardDistributionRoute
+  '/_authenticated/dashboard/finance': typeof AuthenticatedDashboardFinanceRoute
+  '/_authenticated/dashboard/mappings': typeof AuthenticatedDashboardMappingsRoute
+  '/_authenticated/dashboard/products': typeof AuthenticatedDashboardProductsRoute
+  '/_authenticated/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
+  '/_authenticated/dashboard/stores': typeof AuthenticatedDashboardStoresRoute
+  '/_authenticated/dashboard/support': typeof AuthenticatedDashboardSupportRouteWithChildren
+  '/_authenticated/dashboard/tracking': typeof AuthenticatedDashboardTrackingRoute
+  '/api/public/s2s-cart.js': typeof ApiPublicS2sCartDotjsRoute
+  '/api/public/s2s-checkout': typeof ApiPublicS2sCheckoutRoute
+  '/api/public/s2s-settings': typeof ApiPublicS2sSettingsRoute
+  '/api/public/s2s-track': typeof ApiPublicS2sTrackRoute
+  '/api/public/shopify-order-webhook': typeof ApiPublicShopifyOrderWebhookRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/admin/tickets/$ticketId': typeof AuthenticatedAdminTicketsTicketIdRoute
+  '/_authenticated/dashboard/support/$ticketId': typeof AuthenticatedDashboardSupportTicketIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/report-abuse'
+    | '/signup'
+    | '/admin'
+    | '/dashboard'
+    | '/onboarding'
+    | '/legal/ccpa'
+    | '/legal/cookies'
+    | '/legal/dpa'
+    | '/legal/dpo'
+    | '/legal/privacidade'
+    | '/legal/reembolso'
+    | '/legal/subprocessadores'
+    | '/legal/termos'
+    | '/admin/abuse-reports'
+    | '/admin/metrics'
+    | '/admin/plans'
+    | '/admin/tickets'
+    | '/admin/users'
+    | '/admin/workspaces'
+    | '/dashboard/analytics'
+    | '/dashboard/bulk-edit'
+    | '/dashboard/camuflador'
+    | '/dashboard/cart'
+    | '/dashboard/distribution'
+    | '/dashboard/finance'
+    | '/dashboard/mappings'
+    | '/dashboard/products'
+    | '/dashboard/settings'
+    | '/dashboard/stores'
+    | '/dashboard/support'
+    | '/dashboard/tracking'
+    | '/api/public/s2s-cart.js'
+    | '/api/public/s2s-checkout'
+    | '/api/public/s2s-settings'
+    | '/api/public/s2s-track'
+    | '/api/public/shopify-order-webhook'
+    | '/admin/'
+    | '/dashboard/'
+    | '/admin/tickets/$ticketId'
+    | '/dashboard/support/$ticketId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/report-abuse'
+    | '/signup'
+    | '/onboarding'
+    | '/legal/ccpa'
+    | '/legal/cookies'
+    | '/legal/dpa'
+    | '/legal/dpo'
+    | '/legal/privacidade'
+    | '/legal/reembolso'
+    | '/legal/subprocessadores'
+    | '/legal/termos'
+    | '/admin/abuse-reports'
+    | '/admin/metrics'
+    | '/admin/plans'
+    | '/admin/tickets'
+    | '/admin/users'
+    | '/admin/workspaces'
+    | '/dashboard/analytics'
+    | '/dashboard/bulk-edit'
+    | '/dashboard/camuflador'
+    | '/dashboard/cart'
+    | '/dashboard/distribution'
+    | '/dashboard/finance'
+    | '/dashboard/mappings'
+    | '/dashboard/products'
+    | '/dashboard/settings'
+    | '/dashboard/stores'
+    | '/dashboard/support'
+    | '/dashboard/tracking'
+    | '/api/public/s2s-cart.js'
+    | '/api/public/s2s-checkout'
+    | '/api/public/s2s-settings'
+    | '/api/public/s2s-track'
+    | '/api/public/shopify-order-webhook'
+    | '/admin'
+    | '/dashboard'
+    | '/admin/tickets/$ticketId'
+    | '/dashboard/support/$ticketId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/login'
+    | '/report-abuse'
+    | '/signup'
+    | '/_authenticated/admin'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/onboarding'
+    | '/legal/ccpa'
+    | '/legal/cookies'
+    | '/legal/dpa'
+    | '/legal/dpo'
+    | '/legal/privacidade'
+    | '/legal/reembolso'
+    | '/legal/subprocessadores'
+    | '/legal/termos'
+    | '/_authenticated/admin/abuse-reports'
+    | '/_authenticated/admin/metrics'
+    | '/_authenticated/admin/plans'
+    | '/_authenticated/admin/tickets'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/admin/workspaces'
+    | '/_authenticated/dashboard/analytics'
+    | '/_authenticated/dashboard/bulk-edit'
+    | '/_authenticated/dashboard/camuflador'
+    | '/_authenticated/dashboard/cart'
+    | '/_authenticated/dashboard/distribution'
+    | '/_authenticated/dashboard/finance'
+    | '/_authenticated/dashboard/mappings'
+    | '/_authenticated/dashboard/products'
+    | '/_authenticated/dashboard/settings'
+    | '/_authenticated/dashboard/stores'
+    | '/_authenticated/dashboard/support'
+    | '/_authenticated/dashboard/tracking'
+    | '/api/public/s2s-cart.js'
+    | '/api/public/s2s-checkout'
+    | '/api/public/s2s-settings'
+    | '/api/public/s2s-track'
+    | '/api/public/shopify-order-webhook'
+    | '/_authenticated/admin/'
+    | '/_authenticated/dashboard/'
+    | '/_authenticated/admin/tickets/$ticketId'
+    | '/_authenticated/dashboard/support/$ticketId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ReportAbuseRoute: typeof ReportAbuseRoute
+  SignupRoute: typeof SignupRoute
+  LegalCcpaRoute: typeof LegalCcpaRoute
+  LegalCookiesRoute: typeof LegalCookiesRoute
+  LegalDpaRoute: typeof LegalDpaRoute
+  LegalDpoRoute: typeof LegalDpoRoute
+  LegalPrivacidadeRoute: typeof LegalPrivacidadeRoute
+  LegalReembolsoRoute: typeof LegalReembolsoRoute
+  LegalSubprocessadoresRoute: typeof LegalSubprocessadoresRoute
+  LegalTermosRoute: typeof LegalTermosRoute
+  ApiPublicS2sCartDotjsRoute: typeof ApiPublicS2sCartDotjsRoute
+  ApiPublicS2sCheckoutRoute: typeof ApiPublicS2sCheckoutRoute
+  ApiPublicS2sSettingsRoute: typeof ApiPublicS2sSettingsRoute
+  ApiPublicS2sTrackRoute: typeof ApiPublicS2sTrackRoute
+  ApiPublicShopifyOrderWebhookRoute: typeof ApiPublicShopifyOrderWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report-abuse': {
+      id: '/report-abuse'
+      path: '/report-abuse'
+      fullPath: '/report-abuse'
+      preLoaderRoute: typeof ReportAbuseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +612,403 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal/termos': {
+      id: '/legal/termos'
+      path: '/legal/termos'
+      fullPath: '/legal/termos'
+      preLoaderRoute: typeof LegalTermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/subprocessadores': {
+      id: '/legal/subprocessadores'
+      path: '/legal/subprocessadores'
+      fullPath: '/legal/subprocessadores'
+      preLoaderRoute: typeof LegalSubprocessadoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/reembolso': {
+      id: '/legal/reembolso'
+      path: '/legal/reembolso'
+      fullPath: '/legal/reembolso'
+      preLoaderRoute: typeof LegalReembolsoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/privacidade': {
+      id: '/legal/privacidade'
+      path: '/legal/privacidade'
+      fullPath: '/legal/privacidade'
+      preLoaderRoute: typeof LegalPrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/dpo': {
+      id: '/legal/dpo'
+      path: '/legal/dpo'
+      fullPath: '/legal/dpo'
+      preLoaderRoute: typeof LegalDpoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/dpa': {
+      id: '/legal/dpa'
+      path: '/legal/dpa'
+      fullPath: '/legal/dpa'
+      preLoaderRoute: typeof LegalDpaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/cookies': {
+      id: '/legal/cookies'
+      path: '/legal/cookies'
+      fullPath: '/legal/cookies'
+      preLoaderRoute: typeof LegalCookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/ccpa': {
+      id: '/legal/ccpa'
+      path: '/legal/ccpa'
+      fullPath: '/legal/ccpa'
+      preLoaderRoute: typeof LegalCcpaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/onboarding': {
+      id: '/_authenticated/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/api/public/shopify-order-webhook': {
+      id: '/api/public/shopify-order-webhook'
+      path: '/api/public/shopify-order-webhook'
+      fullPath: '/api/public/shopify-order-webhook'
+      preLoaderRoute: typeof ApiPublicShopifyOrderWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/s2s-track': {
+      id: '/api/public/s2s-track'
+      path: '/api/public/s2s-track'
+      fullPath: '/api/public/s2s-track'
+      preLoaderRoute: typeof ApiPublicS2sTrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/s2s-settings': {
+      id: '/api/public/s2s-settings'
+      path: '/api/public/s2s-settings'
+      fullPath: '/api/public/s2s-settings'
+      preLoaderRoute: typeof ApiPublicS2sSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/s2s-checkout': {
+      id: '/api/public/s2s-checkout'
+      path: '/api/public/s2s-checkout'
+      fullPath: '/api/public/s2s-checkout'
+      preLoaderRoute: typeof ApiPublicS2sCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/s2s-cart.js': {
+      id: '/api/public/s2s-cart.js'
+      path: '/api/public/s2s-cart.js'
+      fullPath: '/api/public/s2s-cart.js'
+      preLoaderRoute: typeof ApiPublicS2sCartDotjsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard/tracking': {
+      id: '/_authenticated/dashboard/tracking'
+      path: '/tracking'
+      fullPath: '/dashboard/tracking'
+      preLoaderRoute: typeof AuthenticatedDashboardTrackingRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/support': {
+      id: '/_authenticated/dashboard/support'
+      path: '/support'
+      fullPath: '/dashboard/support'
+      preLoaderRoute: typeof AuthenticatedDashboardSupportRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/stores': {
+      id: '/_authenticated/dashboard/stores'
+      path: '/stores'
+      fullPath: '/dashboard/stores'
+      preLoaderRoute: typeof AuthenticatedDashboardStoresRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/settings': {
+      id: '/_authenticated/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof AuthenticatedDashboardSettingsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/products': {
+      id: '/_authenticated/dashboard/products'
+      path: '/products'
+      fullPath: '/dashboard/products'
+      preLoaderRoute: typeof AuthenticatedDashboardProductsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/mappings': {
+      id: '/_authenticated/dashboard/mappings'
+      path: '/mappings'
+      fullPath: '/dashboard/mappings'
+      preLoaderRoute: typeof AuthenticatedDashboardMappingsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/finance': {
+      id: '/_authenticated/dashboard/finance'
+      path: '/finance'
+      fullPath: '/dashboard/finance'
+      preLoaderRoute: typeof AuthenticatedDashboardFinanceRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/distribution': {
+      id: '/_authenticated/dashboard/distribution'
+      path: '/distribution'
+      fullPath: '/dashboard/distribution'
+      preLoaderRoute: typeof AuthenticatedDashboardDistributionRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/cart': {
+      id: '/_authenticated/dashboard/cart'
+      path: '/cart'
+      fullPath: '/dashboard/cart'
+      preLoaderRoute: typeof AuthenticatedDashboardCartRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/camuflador': {
+      id: '/_authenticated/dashboard/camuflador'
+      path: '/camuflador'
+      fullPath: '/dashboard/camuflador'
+      preLoaderRoute: typeof AuthenticatedDashboardCamufladorRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/bulk-edit': {
+      id: '/_authenticated/dashboard/bulk-edit'
+      path: '/bulk-edit'
+      fullPath: '/dashboard/bulk-edit'
+      preLoaderRoute: typeof AuthenticatedDashboardBulkEditRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/analytics': {
+      id: '/_authenticated/dashboard/analytics'
+      path: '/analytics'
+      fullPath: '/dashboard/analytics'
+      preLoaderRoute: typeof AuthenticatedDashboardAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/admin/workspaces': {
+      id: '/_authenticated/admin/workspaces'
+      path: '/workspaces'
+      fullPath: '/admin/workspaces'
+      preLoaderRoute: typeof AuthenticatedAdminWorkspacesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/tickets': {
+      id: '/_authenticated/admin/tickets'
+      path: '/tickets'
+      fullPath: '/admin/tickets'
+      preLoaderRoute: typeof AuthenticatedAdminTicketsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/plans': {
+      id: '/_authenticated/admin/plans'
+      path: '/plans'
+      fullPath: '/admin/plans'
+      preLoaderRoute: typeof AuthenticatedAdminPlansRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/metrics': {
+      id: '/_authenticated/admin/metrics'
+      path: '/metrics'
+      fullPath: '/admin/metrics'
+      preLoaderRoute: typeof AuthenticatedAdminMetricsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/abuse-reports': {
+      id: '/_authenticated/admin/abuse-reports'
+      path: '/abuse-reports'
+      fullPath: '/admin/abuse-reports'
+      preLoaderRoute: typeof AuthenticatedAdminAbuseReportsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/dashboard/support/$ticketId': {
+      id: '/_authenticated/dashboard/support/$ticketId'
+      path: '/$ticketId'
+      fullPath: '/dashboard/support/$ticketId'
+      preLoaderRoute: typeof AuthenticatedDashboardSupportTicketIdRouteImport
+      parentRoute: typeof AuthenticatedDashboardSupportRoute
+    }
+    '/_authenticated/admin/tickets/$ticketId': {
+      id: '/_authenticated/admin/tickets/$ticketId'
+      path: '/$ticketId'
+      fullPath: '/admin/tickets/$ticketId'
+      preLoaderRoute: typeof AuthenticatedAdminTicketsTicketIdRouteImport
+      parentRoute: typeof AuthenticatedAdminTicketsRoute
+    }
   }
 }
 
+interface AuthenticatedAdminTicketsRouteChildren {
+  AuthenticatedAdminTicketsTicketIdRoute: typeof AuthenticatedAdminTicketsTicketIdRoute
+}
+
+const AuthenticatedAdminTicketsRouteChildren: AuthenticatedAdminTicketsRouteChildren =
+  {
+    AuthenticatedAdminTicketsTicketIdRoute:
+      AuthenticatedAdminTicketsTicketIdRoute,
+  }
+
+const AuthenticatedAdminTicketsRouteWithChildren =
+  AuthenticatedAdminTicketsRoute._addFileChildren(
+    AuthenticatedAdminTicketsRouteChildren,
+  )
+
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAbuseReportsRoute: typeof AuthenticatedAdminAbuseReportsRoute
+  AuthenticatedAdminMetricsRoute: typeof AuthenticatedAdminMetricsRoute
+  AuthenticatedAdminPlansRoute: typeof AuthenticatedAdminPlansRoute
+  AuthenticatedAdminTicketsRoute: typeof AuthenticatedAdminTicketsRouteWithChildren
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminWorkspacesRoute: typeof AuthenticatedAdminWorkspacesRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAbuseReportsRoute: AuthenticatedAdminAbuseReportsRoute,
+  AuthenticatedAdminMetricsRoute: AuthenticatedAdminMetricsRoute,
+  AuthenticatedAdminPlansRoute: AuthenticatedAdminPlansRoute,
+  AuthenticatedAdminTicketsRoute: AuthenticatedAdminTicketsRouteWithChildren,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedAdminWorkspacesRoute: AuthenticatedAdminWorkspacesRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
+interface AuthenticatedDashboardSupportRouteChildren {
+  AuthenticatedDashboardSupportTicketIdRoute: typeof AuthenticatedDashboardSupportTicketIdRoute
+}
+
+const AuthenticatedDashboardSupportRouteChildren: AuthenticatedDashboardSupportRouteChildren =
+  {
+    AuthenticatedDashboardSupportTicketIdRoute:
+      AuthenticatedDashboardSupportTicketIdRoute,
+  }
+
+const AuthenticatedDashboardSupportRouteWithChildren =
+  AuthenticatedDashboardSupportRoute._addFileChildren(
+    AuthenticatedDashboardSupportRouteChildren,
+  )
+
+interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardAnalyticsRoute: typeof AuthenticatedDashboardAnalyticsRoute
+  AuthenticatedDashboardBulkEditRoute: typeof AuthenticatedDashboardBulkEditRoute
+  AuthenticatedDashboardCamufladorRoute: typeof AuthenticatedDashboardCamufladorRoute
+  AuthenticatedDashboardCartRoute: typeof AuthenticatedDashboardCartRoute
+  AuthenticatedDashboardDistributionRoute: typeof AuthenticatedDashboardDistributionRoute
+  AuthenticatedDashboardFinanceRoute: typeof AuthenticatedDashboardFinanceRoute
+  AuthenticatedDashboardMappingsRoute: typeof AuthenticatedDashboardMappingsRoute
+  AuthenticatedDashboardProductsRoute: typeof AuthenticatedDashboardProductsRoute
+  AuthenticatedDashboardSettingsRoute: typeof AuthenticatedDashboardSettingsRoute
+  AuthenticatedDashboardStoresRoute: typeof AuthenticatedDashboardStoresRoute
+  AuthenticatedDashboardSupportRoute: typeof AuthenticatedDashboardSupportRouteWithChildren
+  AuthenticatedDashboardTrackingRoute: typeof AuthenticatedDashboardTrackingRoute
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+}
+
+const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
+  {
+    AuthenticatedDashboardAnalyticsRoute: AuthenticatedDashboardAnalyticsRoute,
+    AuthenticatedDashboardBulkEditRoute: AuthenticatedDashboardBulkEditRoute,
+    AuthenticatedDashboardCamufladorRoute:
+      AuthenticatedDashboardCamufladorRoute,
+    AuthenticatedDashboardCartRoute: AuthenticatedDashboardCartRoute,
+    AuthenticatedDashboardDistributionRoute:
+      AuthenticatedDashboardDistributionRoute,
+    AuthenticatedDashboardFinanceRoute: AuthenticatedDashboardFinanceRoute,
+    AuthenticatedDashboardMappingsRoute: AuthenticatedDashboardMappingsRoute,
+    AuthenticatedDashboardProductsRoute: AuthenticatedDashboardProductsRoute,
+    AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
+    AuthenticatedDashboardStoresRoute: AuthenticatedDashboardStoresRoute,
+    AuthenticatedDashboardSupportRoute:
+      AuthenticatedDashboardSupportRouteWithChildren,
+    AuthenticatedDashboardTrackingRoute: AuthenticatedDashboardTrackingRoute,
+    AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  }
+
+const AuthenticatedDashboardRouteWithChildren =
+  AuthenticatedDashboardRoute._addFileChildren(
+    AuthenticatedDashboardRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
+  AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
+  AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ReportAbuseRoute: ReportAbuseRoute,
+  SignupRoute: SignupRoute,
+  LegalCcpaRoute: LegalCcpaRoute,
+  LegalCookiesRoute: LegalCookiesRoute,
+  LegalDpaRoute: LegalDpaRoute,
+  LegalDpoRoute: LegalDpoRoute,
+  LegalPrivacidadeRoute: LegalPrivacidadeRoute,
+  LegalReembolsoRoute: LegalReembolsoRoute,
+  LegalSubprocessadoresRoute: LegalSubprocessadoresRoute,
+  LegalTermosRoute: LegalTermosRoute,
+  ApiPublicS2sCartDotjsRoute: ApiPublicS2sCartDotjsRoute,
+  ApiPublicS2sCheckoutRoute: ApiPublicS2sCheckoutRoute,
+  ApiPublicS2sSettingsRoute: ApiPublicS2sSettingsRoute,
+  ApiPublicS2sTrackRoute: ApiPublicS2sTrackRoute,
+  ApiPublicShopifyOrderWebhookRoute: ApiPublicShopifyOrderWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

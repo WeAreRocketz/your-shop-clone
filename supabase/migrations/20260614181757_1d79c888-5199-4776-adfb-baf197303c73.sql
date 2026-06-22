@@ -1,0 +1,1 @@
+UPDATE public.plans SET max_products = NULL, max_orders_monthly = NULL;
