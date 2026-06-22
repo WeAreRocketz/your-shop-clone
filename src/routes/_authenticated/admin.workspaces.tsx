@@ -1,11 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search } from "@/components/icon";
+import { Search, Settings } from "@/components/icon";
 
 export const Route = createFileRoute("/_authenticated/admin/workspaces")({
   component: AdminWorkspacesPage,
@@ -101,11 +102,12 @@ function AdminWorkspacesPage() {
               <th className="px-4 py-3 font-medium">Dono</th>
               <th className="px-4 py-3 font-medium">Trial expira</th>
               <th className="px-4 py-3 font-medium">Plano</th>
+              <th className="px-4 py-3 font-medium text-right">Ações</th>
             </tr>
           </thead>
           <tbody>
             {isLoading && (
-              <tr><td colSpan={4} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
+              <tr><td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
             )}
             {filtered.map((w) => {
               const owner = profileMap.get(w.user_id);
@@ -130,11 +132,18 @@ function AdminWorkspacesPage() {
                       </SelectContent>
                     </Select>
                   </td>
+                  <td className="px-4 py-3 text-right">
+                    <Button asChild size="sm" variant="outline">
+                      <Link to="/admin/workspaces/$id" params={{ id: w.id }}>
+                        <Settings className="h-3 w-3 mr-1" /> Detalhes
+                      </Link>
+                    </Button>
+                  </td>
                 </tr>
               );
             })}
             {!isLoading && filtered.length === 0 && (
-              <tr><td colSpan={4} className="px-4 py-8 text-center text-muted-foreground">Nenhum workspace.</td></tr>
+              <tr><td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">Nenhum workspace.</td></tr>
             )}
           </tbody>
         </table>
