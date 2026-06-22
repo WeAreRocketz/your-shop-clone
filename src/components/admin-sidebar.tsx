@@ -1,6 +1,6 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
-  LayoutDashboard, Users, Crown, AlertTriangle, BarChart3, ShoppingBag, Mail, Shield, LogOut, ArrowRight,
+  LayoutDashboard, Users, Crown, AlertTriangle, BarChart3, ShoppingBag, Mail, Shield, LogOut, ArrowRight, UserCheck, Receipt,
 } from "@/components/icon";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -12,8 +12,10 @@ import logoAsset from "@/assets/shop2shops-logo.png.asset.json";
 
 const items = [
   { title: "Visão geral", url: "/admin", icon: LayoutDashboard, exact: true },
+  { title: "Aprovações", url: "/admin/approvals", icon: UserCheck },
   { title: "Usuários", url: "/admin/users", icon: Users },
   { title: "Workspaces", url: "/admin/workspaces", icon: ShoppingBag },
+  { title: "Financeiro", url: "/admin/financial", icon: Receipt },
   { title: "Planos", url: "/admin/plans", icon: Crown },
   { title: "Métricas & Custos", url: "/admin/metrics", icon: BarChart3 },
   { title: "Tickets", url: "/admin/tickets", icon: Mail },
