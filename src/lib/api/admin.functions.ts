@@ -32,7 +32,7 @@ export const setApprovalStatus = createServerFn({ method: "POST" })
       update.approved_by = context.userId;
     }
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin
+    const { error } = await (supabaseAdmin as any)
       .from("profiles")
       .update(update)
       .eq("id", data.userId);
