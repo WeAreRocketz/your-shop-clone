@@ -4,10 +4,11 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
-import { setApprovalStatus } from "@/lib/api/admin.functions";
+import { setApprovalStatus, setWorkspacePlan } from "@/lib/api/admin.functions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Shield, Search, Check, X } from "@/components/icon";
 
 export const Route = createFileRoute("/_authenticated/admin/users")({
