@@ -31,7 +31,8 @@ export const setApprovalStatus = createServerFn({ method: "POST" })
       update.approved_at = new Date().toISOString();
       update.approved_by = context.userId;
     }
-    const { error } = await (context.supabase as any)
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin
       .from("profiles")
       .update(update)
       .eq("id", data.userId);
