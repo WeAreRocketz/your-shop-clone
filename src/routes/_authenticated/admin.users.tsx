@@ -120,6 +120,16 @@ function AdminUsersPage() {
     onError: (e: any) => toast.error(e?.message ?? "Erro"),
   });
 
+  const changePlan = useMutation({
+    mutationFn: (args: { workspaceId: string; planId: string }) =>
+      setPlanFn({ data: args }),
+    onSuccess: () => {
+      toast.success("Plano atualizado");
+      qc.invalidateQueries({ queryKey: ["admin-workspaces-by-user"] });
+    },
+    onError: (e: any) => toast.error(e?.message ?? "Erro ao trocar plano"),
+  });
+
   return (
     <div className="mx-auto max-w-7xl px-6 py-10">
       <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Usuários</h1>
