@@ -28,7 +28,7 @@ function AdminUsersPage() {
   const qc = useQueryClient();
   const [q, setQ] = useState("");
   const approveFn = useServerFn(setApprovalStatus);
-  const setPlanFn = useServerFn(setWorkspacePlan);
+  const setPlanFn = useServerFn(setUserPlan);
 
   const { data: profiles, isLoading } = useQuery({
     queryKey: ["admin-users"],
