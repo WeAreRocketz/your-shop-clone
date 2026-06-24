@@ -4,10 +4,11 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
-import { setApprovalStatus } from "@/lib/api/admin.functions";
+import { setApprovalStatus, setWorkspacePlan } from "@/lib/api/admin.functions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Shield, Search, Check, X } from "@/components/icon";
 
 export const Route = createFileRoute("/_authenticated/admin/users")({
@@ -27,6 +28,7 @@ function AdminUsersPage() {
   const qc = useQueryClient();
   const [q, setQ] = useState("");
   const approveFn = useServerFn(setApprovalStatus);
+  const setPlanFn = useServerFn(setWorkspacePlan);
 
   const { data: profiles, isLoading } = useQuery({
     queryKey: ["admin-users"],
@@ -49,10 +51,39 @@ function AdminUsersPage() {
     },
   });
 
+  const { data: plans } = useQuery({
+    queryKey: ["admin-plans"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("plans")
+        .select("id, name, slug")
+        .order("price_monthly", { ascending: true });
+      if (error) throw error;
+      return data as { id: string; name: string; slug: string }[];
+    },
+  });
+
+  const { data: workspaces } = useQuery({
+    queryKey: ["admin-workspaces-by-user"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("workspaces")
+        .select("id, user_id, plan_id");
+      if (error) throw error;
+      return data as { id: string; user_id: string; plan_id: string | null }[];
+    },
+  });
+
   const adminSet = useMemo(
     () => new Set((roles ?? []).filter((r) => r.role === "admin").map((r) => r.user_id)),
     [roles],
   );
+
+  const workspaceByUser = useMemo(() => {
+    const m = new Map<string, { id: string; plan_id: string | null }>();
+    for (const w of workspaces ?? []) m.set(w.user_id, { id: w.id, plan_id: w.plan_id });
+    return m;
+  }, [workspaces]);
 
   const filtered = useMemo(() => {
     const term = q.trim().toLowerCase();
@@ -89,6 +120,16 @@ function AdminUsersPage() {
     onError: (e: any) => toast.error(e?.message ?? "Erro"),
   });
 
+  const changePlan = useMutation({
+    mutationFn: (args: { workspaceId: string; planId: string }) =>
+      setPlanFn({ data: args }),
+    onSuccess: () => {
+      toast.success("Plano atualizado");
+      qc.invalidateQueries({ queryKey: ["admin-workspaces-by-user"] });
+    },
+    onError: (e: any) => toast.error(e?.message ?? "Erro ao trocar plano"),
+  });
+
   return (
     <div className="mx-auto max-w-7xl px-6 py-10">
       <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Usuários</h1>
@@ -113,16 +154,18 @@ function AdminUsersPage() {
               <th className="px-4 py-3 font-medium">Criado</th>
               <th className="px-4 py-3 font-medium">Status</th>
               <th className="px-4 py-3 font-medium">Role</th>
+              <th className="px-4 py-3 font-medium">Plano</th>
               <th className="px-4 py-3 font-medium text-right">Ações</th>
             </tr>
           </thead>
           <tbody>
             {isLoading && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
             )}
             {filtered.map((u) => {
               const isAdmin = adminSet.has(u.id);
               const status = u.approval_status ?? "approved";
+              const ws = workspaceByUser.get(u.id);
               return (
                 <tr key={u.id} className="border-t border-border/40">
                   <td className="px-4 py-3 font-medium">{u.name || "—"}</td>
@@ -138,6 +181,29 @@ function AdminUsersPage() {
                       <Badge className="bg-primary/15 text-primary ring-1 ring-primary/30"><Shield className="mr-1 h-3 w-3" />admin</Badge>
                     ) : (
                       <Badge variant="secondary">user</Badge>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    {ws ? (
+                      <Select
+                        value={ws.plan_id ?? ""}
+                        onValueChange={(planId) => {
+                          if (!planId || planId === ws.plan_id) return;
+                          changePlan.mutate({ workspaceId: ws.id, planId });
+                        }}
+                        disabled={changePlan.isPending || !plans?.length}
+                      >
+                        <SelectTrigger className="h-8 w-[160px]">
+                          <SelectValue placeholder="Selecionar plano" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(plans ?? []).map((p) => (
+                            <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">sem workspace</span>
                     )}
                   </td>
                   <td className="px-4 py-3">
@@ -166,7 +232,7 @@ function AdminUsersPage() {
               );
             })}
             {!isLoading && filtered.length === 0 && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Nenhum usuário encontrado.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">Nenhum usuário encontrado.</td></tr>
             )}
           </tbody>
         </table>
