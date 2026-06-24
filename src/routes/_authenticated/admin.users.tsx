@@ -154,16 +154,18 @@ function AdminUsersPage() {
               <th className="px-4 py-3 font-medium">Criado</th>
               <th className="px-4 py-3 font-medium">Status</th>
               <th className="px-4 py-3 font-medium">Role</th>
+              <th className="px-4 py-3 font-medium">Plano</th>
               <th className="px-4 py-3 font-medium text-right">Ações</th>
             </tr>
           </thead>
           <tbody>
             {isLoading && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
             )}
             {filtered.map((u) => {
               const isAdmin = adminSet.has(u.id);
               const status = u.approval_status ?? "approved";
+              const ws = workspaceByUser.get(u.id);
               return (
                 <tr key={u.id} className="border-t border-border/40">
                   <td className="px-4 py-3 font-medium">{u.name || "—"}</td>
@@ -179,6 +181,29 @@ function AdminUsersPage() {
                       <Badge className="bg-primary/15 text-primary ring-1 ring-primary/30"><Shield className="mr-1 h-3 w-3" />admin</Badge>
                     ) : (
                       <Badge variant="secondary">user</Badge>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    {ws ? (
+                      <Select
+                        value={ws.plan_id ?? ""}
+                        onValueChange={(planId) => {
+                          if (!planId || planId === ws.plan_id) return;
+                          changePlan.mutate({ workspaceId: ws.id, planId });
+                        }}
+                        disabled={changePlan.isPending || !plans?.length}
+                      >
+                        <SelectTrigger className="h-8 w-[160px]">
+                          <SelectValue placeholder="Selecionar plano" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(plans ?? []).map((p) => (
+                            <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">sem workspace</span>
                     )}
                   </td>
                   <td className="px-4 py-3">
@@ -207,7 +232,7 @@ function AdminUsersPage() {
               );
             })}
             {!isLoading && filtered.length === 0 && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Nenhum usuário encontrado.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">Nenhum usuário encontrado.</td></tr>
             )}
           </tbody>
         </table>
