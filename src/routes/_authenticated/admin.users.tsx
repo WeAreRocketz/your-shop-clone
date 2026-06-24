@@ -184,27 +184,23 @@ function AdminUsersPage() {
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    {ws ? (
-                      <Select
-                        value={ws.plan_id ?? ""}
-                        onValueChange={(planId) => {
-                          if (!planId || planId === ws.plan_id) return;
-                          changePlan.mutate({ workspaceId: ws.id, planId });
-                        }}
-                        disabled={changePlan.isPending || !plans?.length}
-                      >
-                        <SelectTrigger className="h-8 w-[160px]">
-                          <SelectValue placeholder="Selecionar plano" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {(plans ?? []).map((p) => (
-                            <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    ) : (
-                      <span className="text-xs text-muted-foreground">sem workspace</span>
-                    )}
+                    <Select
+                      value={ws?.plan_id ?? ""}
+                      onValueChange={(planId) => {
+                        if (!planId || planId === ws?.plan_id) return;
+                        changePlan.mutate({ userId: u.id, planId });
+                      }}
+                      disabled={changePlan.isPending || !plans?.length}
+                    >
+                      <SelectTrigger className="h-8 w-[160px]">
+                        <SelectValue placeholder="Selecionar plano" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {(plans ?? []).map((p) => (
+                          <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap justify-end gap-2">
