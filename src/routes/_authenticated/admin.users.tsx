@@ -121,7 +121,7 @@ function AdminUsersPage() {
   });
 
   const changePlan = useMutation({
-    mutationFn: (args: { workspaceId: string; planId: string }) =>
+    mutationFn: (args: { userId: string; planId: string }) =>
       setPlanFn({ data: args }),
     onSuccess: () => {
       toast.success("Plano atualizado");
