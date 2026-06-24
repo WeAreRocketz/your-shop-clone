@@ -61,6 +61,56 @@ export const setWorkspacePlan = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+export const setUserPlan = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) =>
+    z
+      .object({
+        userId: z.string().uuid(),
+        planId: z.string().uuid(),
+        notes: z.string().max(1000).optional(),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context);
+    const sb = context.supabase as any;
+
+    // Find or create the user's workspace
+    const { data: ws, error: wsErr } = await sb
+      .from("workspaces")
+      .select("id")
+      .eq("user_id", data.userId)
+      .maybeSingle();
+    if (wsErr) throw wsErr;
+
+    let workspaceId = ws?.id as string | undefined;
+    if (!workspaceId) {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: prof } = await supabaseAdmin
+        .from("profiles")
+        .select("name, email")
+        .eq("id", data.userId)
+        .maybeSingle();
+      const wsName = (prof?.name as string | null) || (prof?.email as string | null) || "Workspace";
+      const { data: created, error: createErr } = await supabaseAdmin
+        .from("workspaces")
+        .insert({ user_id: data.userId, name: wsName, plan_id: data.planId })
+        .select("id")
+        .single();
+      if (createErr) throw createErr;
+      workspaceId = created.id as string;
+    }
+
+    const { error } = await sb.rpc("admin_set_workspace_plan", {
+      _workspace_id: workspaceId,
+      _plan_id: data.planId,
+      _notes: data.notes ?? null,
+    });
+    if (error) throw error;
+    return { ok: true, workspaceId };
+  });
+
 export const extendTrial = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) =>
