@@ -52,11 +52,11 @@ export const setWorkspacePlan = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
-    const { error } = await (context.supabase as any).rpc("admin_set_workspace_plan", {
-      _workspace_id: data.workspaceId,
-      _plan_id: data.planId,
-      _notes: data.notes ?? null,
-    });
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin
+      .from("workspaces")
+      .update({ plan_id: data.planId })
+      .eq("id", data.workspaceId);
     if (error) throw error;
     return { ok: true };
   });
@@ -102,11 +102,11 @@ export const setUserPlan = createServerFn({ method: "POST" })
       workspaceId = created.id as string;
     }
 
-    const { error } = await sb.rpc("admin_set_workspace_plan", {
-      _workspace_id: workspaceId,
-      _plan_id: data.planId,
-      _notes: data.notes ?? null,
-    });
+    const { supabaseAdmin: sbAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await sbAdmin
+      .from("workspaces")
+      .update({ plan_id: data.planId })
+      .eq("id", workspaceId);
     if (error) throw error;
     return { ok: true, workspaceId };
   });
