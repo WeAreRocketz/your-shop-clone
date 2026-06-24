@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
-import { setApprovalStatus, setWorkspacePlan } from "@/lib/api/admin.functions";
+import { setApprovalStatus, setUserPlan } from "@/lib/api/admin.functions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -28,7 +28,7 @@ function AdminUsersPage() {
   const qc = useQueryClient();
   const [q, setQ] = useState("");
   const approveFn = useServerFn(setApprovalStatus);
-  const setPlanFn = useServerFn(setWorkspacePlan);
+  const setPlanFn = useServerFn(setUserPlan);
 
   const { data: profiles, isLoading } = useQuery({
     queryKey: ["admin-users"],
@@ -121,7 +121,7 @@ function AdminUsersPage() {
   });
 
   const changePlan = useMutation({
-    mutationFn: (args: { workspaceId: string; planId: string }) =>
+    mutationFn: (args: { userId: string; planId: string }) =>
       setPlanFn({ data: args }),
     onSuccess: () => {
       toast.success("Plano atualizado");
@@ -184,27 +184,23 @@ function AdminUsersPage() {
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    {ws ? (
-                      <Select
-                        value={ws.plan_id ?? ""}
-                        onValueChange={(planId) => {
-                          if (!planId || planId === ws.plan_id) return;
-                          changePlan.mutate({ workspaceId: ws.id, planId });
-                        }}
-                        disabled={changePlan.isPending || !plans?.length}
-                      >
-                        <SelectTrigger className="h-8 w-[160px]">
-                          <SelectValue placeholder="Selecionar plano" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {(plans ?? []).map((p) => (
-                            <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    ) : (
-                      <span className="text-xs text-muted-foreground">sem workspace</span>
-                    )}
+                    <Select
+                      value={ws?.plan_id ?? ""}
+                      onValueChange={(planId) => {
+                        if (!planId || planId === ws?.plan_id) return;
+                        changePlan.mutate({ userId: u.id, planId });
+                      }}
+                      disabled={changePlan.isPending || !plans?.length}
+                    >
+                      <SelectTrigger className="h-8 w-[160px]">
+                        <SelectValue placeholder="Selecionar plano" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {(plans ?? []).map((p) => (
+                          <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap justify-end gap-2">
