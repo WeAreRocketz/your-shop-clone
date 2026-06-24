@@ -51,10 +51,39 @@ function AdminUsersPage() {
     },
   });
 
+  const { data: plans } = useQuery({
+    queryKey: ["admin-plans"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("plans")
+        .select("id, name, slug")
+        .order("price_monthly", { ascending: true });
+      if (error) throw error;
+      return data as { id: string; name: string; slug: string }[];
+    },
+  });
+
+  const { data: workspaces } = useQuery({
+    queryKey: ["admin-workspaces-by-user"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("workspaces")
+        .select("id, user_id, plan_id");
+      if (error) throw error;
+      return data as { id: string; user_id: string; plan_id: string | null }[];
+    },
+  });
+
   const adminSet = useMemo(
     () => new Set((roles ?? []).filter((r) => r.role === "admin").map((r) => r.user_id)),
     [roles],
   );
+
+  const workspaceByUser = useMemo(() => {
+    const m = new Map<string, { id: string; plan_id: string | null }>();
+    for (const w of workspaces ?? []) m.set(w.user_id, { id: w.id, plan_id: w.plan_id });
+    return m;
+  }, [workspaces]);
 
   const filtered = useMemo(() => {
     const term = q.trim().toLowerCase();
